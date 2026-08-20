@@ -1,0 +1,57 @@
+; QQ/WF4 dedicated parameter snapshot
+; Source: MT5 Tester profile for the corresponding WFO forward period.
+; The generic set and other WF sets are intentionally not modified.
+InpNoteName=Quantum Queen MT5 v4.3 (22/07/2026)
+InpNoteOverview=XAUUSD. Chart timeframe doesn't matter; the EA manages it inter
+InpNoteWebsite=https://www.mql5.com/en/market/product/118805
+; >>>> GENERAL SETTINGS
+InpPause=1||0||0||1||N
+InpLotsCalc=1||0||0||2||N
+InpAutoLotsValue=3||0||0||6||N
+InpLotsFixed=0.01||0.01||0.001000||0.100000||N
+InpLotsFixedBalance=500.0||500.0||50.000000||5000.000000||N
+InpOrdersMax=10||10||10||100||Y
+InpDDMode=0||1||0||2||N
+InpDDValue=0.0||15||2||25||N
+InpMQID=1||0||0||1||N
+InpMagicNumber=1234||1234||1||12340||N
+InpSpread=100||100||1||1000||N
+InpSlippage=100||100||1||1000||N
+InpTradeCommentRaw=QQX
+InpTradingDirectionType=2||0||0||2||N
+; >>>> SETS & STRATEGIES
+InpSets=0||0||0||5||N
+InpS01Strategy=0||0||0||1||N
+InpS02Strategy=0||0||0||1||N
+InpS03Strategy=0||0||0||1||N
+InpS04Strategy=0||0||0||1||N
+InpS05Strategy=0||0||0||1||N
+InpS06Strategy=0||0||0||1||N
+InpS07Strategy=1||0||0||1||N
+InpS08Strategy=0||0||0||1||N
+InpS09Strategy=0||0||0||1||N
+InpS10Strategy=0||0||0||1||N
+InpS12Strategy=0||0||0||1||N
+; >>> TRADING DAYS
+InpUseNfpFridayFilter=false||false||0||true||Y
+InpTradingFridayNight=false||false||0||true||Y
+InpTradingFridayNightHour=22||0||0||23||N
+InpUseYearEndPause=false||false||0||true||N
+InpTradeOnMonday=true||false||0||true||N
+InpTradeOnTuesday=true||false||0||true||N
+InpTradeOnWednesday=true||false||0||true||N
+InpTradeOnThursday=true||false||0||true||N
+InpTradeOnFriday=true||false||0||true||N
+InpTradeOnSaturday=true||false||0||true||N
+InpTradeOnSunday=true||false||0||true||N
+; >>>> PANEL & VISUAL SETTINGS
+InpPanel=1||0||0||1||N
+InpFont=Trebuchet MS
+InpFontSize=8||8||1||80||N
+InpComment=Quantum Queen MT5
+InpLineStyle=0||0||0||4||N
+InpLineWidth=2||2||1||20||N
+InpTPColor=65280
+InpBEColor=16777215
+InpGridColor=65535
+

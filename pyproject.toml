@@ -1,0 +1,11 @@
+[project]
+name = "mt5-ea-validator"
+version = "0.1.0"
+description = "Reproducible MetaTrader 5 EA validation automation"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[tool.uv]
+package = false
+

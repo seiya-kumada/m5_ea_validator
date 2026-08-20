@@ -1,0 +1,46 @@
+{
+  "scenario_id": "qq_wf4_capital",
+  "wf": "WF4",
+  "terminal_path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
+  "data_directory": "C:\\Users\\s-kum\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075",
+  "expert": "Market\\Quantum Queen X MT5.ex5",
+  "expert_binary": "MQL5\\Experts\\Market\\Quantum Queen X MT5.ex5",
+  "set_source": "config\\sets\\QQ_WF4.set",
+  "staged_set_name": "QQ_WF4.set",
+  "output_root": "data\\backtest_results\\qq_wf4_capital",
+  "symbol": "XAUUSD",
+  "period": "H1",
+  "from_date": "2026.04.01",
+  "to_date": "2026.06.30",
+  "model": 4,
+  "execution_mode": 0,
+  "leverage": 500,
+  "currency": "USD",
+  "optimization": 0,
+  "forward_mode": 0,
+  "deposits": [
+    3000,
+    1000
+  ],
+  "timeout_seconds": 1800,
+  "required_set_values": {
+    "InpLotsCalc": "1",
+    "InpLotsFixed": "0.01",
+    "InpOrdersMax": "10",
+    "InpDDMode": "0",
+    "InpDDValue": "0.0",
+    "InpS07Strategy": "1",
+    "InpUseNfpFridayFilter": "false",
+    "InpTradingFridayNight": "false"
+  },
+  "benchmark": {
+    "deposit": 3000,
+    "net_profit": 362.09,
+    "net_profit_tolerance": 0.1,
+    "net_profit_tolerance_percent": 0.5,
+    "trades": 181,
+    "deal_count": 362,
+    "deal_sequence_sha256": "560c2c1a4c09b211f35bf8e40e176853272172bd99fd1e95aa876c83ba1545e7"
+  }
+}
+
