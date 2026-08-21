@@ -9,6 +9,7 @@ from mt5_ea_validator.setfile import (
     parse_set_values,
     read_set_text,
     stage_dedicated_set,
+    validate_dedicated_set,
     validate_qq_wf_set,
     validate_qq_wf1_set,
 )
@@ -44,6 +45,22 @@ class SetFileTests(unittest.TestCase):
                 self.assertEqual(values["InpLotsFixed"], "0.01")
                 self.assertEqual(values["InpOrdersMax"], "10")
                 self.assertEqual(values["InpS07Strategy"], "1")
+
+    def test_smart_gold_hunter_and_wave_rider_sets_match_requirements(self) -> None:
+        scenarios = [
+            *(f"smart_gold_hunter_wf{number}_capital.json" for number in range(1, 5)),
+            *(f"wave_rider_wf{number}_capital.json" for number in range(1, 5)),
+        ]
+        for config_name in scenarios:
+            with self.subTest(config=config_name):
+                scenario = load_scenario(PROJECT_ROOT / "config" / config_name)
+                values = validate_dedicated_set(
+                    scenario.set_source,
+                    scenario.required_set_values,
+                    label=f"{scenario.ea_id}/{scenario.wf}",
+                )
+                expected_count = 39 if scenario.ea_id == "smart_gold_hunter" else 89
+                self.assertEqual(len(values), expected_count)
 
     def test_staging_writes_utf16_and_reuses_identical_file(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

@@ -37,7 +37,7 @@ def parse_set_values(text: str) -> dict[str, str]:
     return values
 
 
-def validate_qq_wf_set(
+def validate_dedicated_set(
     path: Path,
     required_values: dict[str, str],
     *,
@@ -61,7 +61,17 @@ def validate_qq_wf_set(
 
 
 def validate_qq_wf1_set(path: Path) -> dict[str, str]:
-    return validate_qq_wf_set(path, REQUIRED_QQ_WF1_VALUES, label="QQ/WF1")
+    return validate_dedicated_set(path, REQUIRED_QQ_WF1_VALUES, label="QQ/WF1")
+
+
+def validate_qq_wf_set(
+    path: Path,
+    required_values: dict[str, str],
+    *,
+    label: str = "QQ/WF",
+) -> dict[str, str]:
+    """Backward-compatible alias for existing callers."""
+    return validate_dedicated_set(path, required_values, label=label)
 
 
 def write_mt5_unicode(path: Path, text: str, *, overwrite: bool = False) -> None:
@@ -80,7 +90,7 @@ def stage_dedicated_set(
     label: str = "QQ/WF1",
 ) -> None:
     source_text = read_set_text(source)
-    validate_qq_wf_set(
+    validate_dedicated_set(
         source,
         required_values or REQUIRED_QQ_WF1_VALUES,
         label=label,

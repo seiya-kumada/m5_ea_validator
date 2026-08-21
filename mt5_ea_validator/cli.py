@@ -4,10 +4,14 @@ import argparse
 import sys
 from pathlib import Path
 
-from mt5_ea_validator.configuration import ConfigurationError, load_scenario
+from mt5_ea_validator.configuration import (
+    ConfigurationError,
+    load_scenario,
+    select_target_deposit,
+)
 from mt5_ea_validator.mt5 import MT5Error, validate_environment
 from mt5_ea_validator.runner import CampaignError, run_campaign
-from mt5_ea_validator.setfile import SetFileError, validate_qq_wf_set
+from mt5_ea_validator.setfile import SetFileError, validate_dedicated_set
 
 
 DEFAULT_CONFIG = Path("config/qq_wf1_capital.json")
@@ -29,6 +33,11 @@ def _parser() -> argparse.ArgumentParser:
         "run", help="基準Depositの一致をゲートにCapital Stress Testを直列実行します"
     )
     run.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    run.add_argument(
+        "--target-deposit",
+        type=int,
+        help="run benchmark gate followed by only this deposit",
+    )
     return parser
 
 
@@ -36,10 +45,12 @@ def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
         scenario = load_scenario(args.config)
-        validate_qq_wf_set(
+        if args.command == "run" and args.target_deposit is not None:
+            scenario = select_target_deposit(scenario, args.target_deposit)
+        validate_dedicated_set(
             scenario.set_source,
             scenario.required_set_values,
-            label=f"QQ/{scenario.wf}",
+            label=f"{scenario.ea_id}/{scenario.wf}",
         )
         if args.command == "preflight":
             validate_environment(scenario, require_stopped=True)

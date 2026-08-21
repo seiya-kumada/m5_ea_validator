@@ -1,0 +1,45 @@
+{
+  "scenario_id": "smart_gold_hunter_wf2_capital",
+  "ea_id": "smart_gold_hunter",
+  "artifact_prefix": "SGH",
+  "wf": "WF2",
+  "terminal_path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
+  "data_directory": "C:\\Users\\s-kum\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075",
+  "expert": "Market\\Smart Gold Hunter.ex5",
+  "expert_binary": "MQL5\\Experts\\Market\\Smart Gold Hunter.ex5",
+  "set_source": "config\\sets\\SGH_WF2.set",
+  "staged_set_name": "SGH_WF2.set",
+  "output_root": "data\\backtest_results\\smart_gold_hunter_wf2_capital",
+  "symbol": "XAUUSD",
+  "period": "H1",
+  "from_date": "2025.10.01",
+  "to_date": "2025.12.31",
+  "model": 4,
+  "execution_mode": 0,
+  "leverage": 500,
+  "currency": "USD",
+  "optimization": 0,
+  "forward_mode": 0,
+  "deposits": [
+    3000,
+    1000
+  ],
+  "timeout_seconds": 1800,
+  "required_set_values": {
+    "inp_Mode": "1",
+    "inp_MM": "false",
+    "inp_Lots": "0.01",
+    "inp_UsePropFirmMode": "false",
+    "inp_UseEquityProtection": "false",
+    "inp_UseNewsFilter": "false"
+  },
+  "benchmark": {
+    "deposit": 3000,
+    "net_profit": -113.27,
+    "net_profit_tolerance": 0.1,
+    "net_profit_tolerance_percent": 0.5,
+    "trades": 90,
+    "deal_count": 180,
+    "deal_sequence_sha256": "6bd7ae0bee30fffa3d49e3da4b6e465191eab105be4b16dc992b2c34d9dcf45f"
+  }
+}

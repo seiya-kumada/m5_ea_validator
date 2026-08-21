@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +32,8 @@ class Benchmark:
 @dataclass(frozen=True)
 class Scenario:
     scenario_id: str
+    ea_id: str
+    artifact_prefix: str
     wf: str
     project_root: Path
     terminal_path: Path
@@ -72,18 +74,6 @@ WF_PERIODS = {
     "WF4": ("2026.04.01", "2026.06.30"),
 }
 
-REQUIRED_SET_KEYS = {
-    "InpLotsCalc",
-    "InpLotsFixed",
-    "InpOrdersMax",
-    "InpDDMode",
-    "InpDDValue",
-    "InpS07Strategy",
-    "InpUseNfpFridayFilter",
-    "InpTradingFridayNight",
-}
-
-
 def _find_project_root(config_path: Path) -> Path:
     for candidate in (config_path.parent, *config_path.parents):
         if (candidate / "pyproject.toml").is_file():
@@ -121,6 +111,8 @@ def load_scenario(path: str | Path) -> Scenario:
 
     scenario = Scenario(
         scenario_id=str(_require(raw, "scenario_id")),
+        ea_id=str(_require(raw, "ea_id")),
+        artifact_prefix=str(_require(raw, "artifact_prefix")),
         wf=str(_require(raw, "wf")).upper(),
         project_root=project_root,
         terminal_path=Path(_require(raw, "terminal_path")),
@@ -153,6 +145,20 @@ def load_scenario(path: str | Path) -> Scenario:
     return scenario
 
 
+def select_target_deposit(scenario: Scenario, target_deposit: int) -> Scenario:
+    """Return a run-only scenario for benchmark gate followed by one target."""
+    if target_deposit <= 0:
+        raise ConfigurationError("target deposit must be a positive integer")
+    if target_deposit == scenario.benchmark.deposit:
+        raise ConfigurationError("target deposit must differ from benchmark deposit")
+    selected = replace(
+        scenario,
+        deposits=(scenario.benchmark.deposit, target_deposit),
+    )
+    validate_scenario(selected)
+    return selected
+
+
 def validate_scenario(scenario: Scenario) -> None:
     expected = {
         "model": (scenario.model, 4),
@@ -165,14 +171,18 @@ def validate_scenario(scenario: Scenario) -> None:
     if invalid:
         details = ", ".join(f"{name}={getattr(scenario, name)}" for name in invalid)
         raise ConfigurationError(
-            f"QQ/{scenario.wf}固定条件に適合していません: {details}"
+            f"{scenario.ea_id}/{scenario.wf}固定条件に適合していません: {details}"
         )
     if scenario.symbol != "XAUUSD" or scenario.period != "H1":
-        raise ConfigurationError(f"QQ/{scenario.wf}はXAUUSD/H1に固定されています")
+        raise ConfigurationError(
+            f"{scenario.ea_id}/{scenario.wf}はXAUUSD/H1に固定されています"
+        )
     if scenario.wf not in WF_PERIODS:
         raise ConfigurationError(f"未対応のWFです: {scenario.wf}")
     if (scenario.from_date, scenario.to_date) != WF_PERIODS[scenario.wf]:
-        raise ConfigurationError(f"QQ/{scenario.wf}期間が計画値と一致しません")
+        raise ConfigurationError(
+            f"{scenario.ea_id}/{scenario.wf}期間が計画値と一致しません"
+        )
     if not scenario.deposits or scenario.deposits[0] != scenario.benchmark.deposit:
         raise ConfigurationError(
             "最初のDepositはベンチマークDepositでなければなりません"
@@ -186,12 +196,17 @@ def validate_scenario(scenario: Scenario) -> None:
     if Path(scenario.staged_set_name).name != scenario.staged_set_name:
         raise ConfigurationError("staged_set_nameにはファイル名だけを指定してください")
 
-    missing_set_keys = sorted(REQUIRED_SET_KEYS - scenario.required_set_values.keys())
-    if missing_set_keys:
+    if not scenario.ea_id.strip():
+        raise ConfigurationError("ea_idを空にはできません")
+    if (
+        not scenario.artifact_prefix
+        or not scenario.artifact_prefix.replace("_", "").isalnum()
+    ):
         raise ConfigurationError(
-            "required_set_valuesに必須項目がありません: "
-            + ", ".join(missing_set_keys)
+            "artifact_prefixには英数字とアンダースコアだけを指定してください"
         )
+    if not scenario.required_set_values:
+        raise ConfigurationError("required_set_valuesを空にはできません")
 
     optional_pairs = (
         ("profit_factor", "profit_factor_tolerance"),

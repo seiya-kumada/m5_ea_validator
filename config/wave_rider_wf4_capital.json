@@ -1,0 +1,48 @@
+{
+  "scenario_id": "wave_rider_wf4_capital",
+  "ea_id": "wave_rider",
+  "artifact_prefix": "WR",
+  "wf": "WF4",
+  "terminal_path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
+  "data_directory": "C:\\Users\\s-kum\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075",
+  "expert": "Market\\Wave Rider EA MT5.ex5",
+  "expert_binary": "MQL5\\Experts\\Market\\Wave Rider EA MT5.ex5",
+  "set_source": "config\\sets\\WR_WF4.set",
+  "staged_set_name": "WR_WF4.set",
+  "output_root": "data\\backtest_results\\wave_rider_wf4_capital",
+  "symbol": "XAUUSD",
+  "period": "H1",
+  "from_date": "2026.04.01",
+  "to_date": "2026.06.30",
+  "model": 4,
+  "execution_mode": 0,
+  "leverage": 500,
+  "currency": "USD",
+  "optimization": 0,
+  "forward_mode": 0,
+  "deposits": [
+    3000,
+    1000
+  ],
+  "timeout_seconds": 1800,
+  "required_set_values": {
+    "Inp_TradeMode": "0",
+    "Inp_RiskProfile": "0",
+    "Inp_PositionSizeMethod": "0",
+    "Inp_FixedLotSize": "0.01",
+    "Inp_Grid_RecoverySpacing": "1",
+    "Inp_Grid_MaxOrders": "10",
+    "Inp_EnableDrawdownProtection": "true",
+    "Inp_DrawdownMode": "0",
+    "Inp_DrawdownThreshold": "35.0"
+  },
+  "benchmark": {
+    "deposit": 3000,
+    "net_profit": 491.77,
+    "net_profit_tolerance": 0.1,
+    "net_profit_tolerance_percent": 0.5,
+    "trades": 245,
+    "deal_count": 490,
+    "deal_sequence_sha256": "1dd2c04c7c1721617109bb3bef1d71e357f638792ae96bd48725cf6cb56a4e09"
+  }
+}

@@ -93,6 +93,7 @@ def run_campaign(
         "schema_version": 1,
         "run_id": run_directory.name,
         "scenario_id": scenario.scenario_id,
+        "ea_id": scenario.ea_id,
         "status": "running",
         "started_at_jst": _timestamp(started),
         "finished_at_jst": None,
@@ -122,7 +123,8 @@ def run_campaign(
             deposit_started = now_factory()
             output_directory = run_directory / f"deposit_{deposit}"
             logger.info(
-                "test started ea=%s wf=%s from=%s to=%s deposit=%s set=%s",
+                "test started ea_id=%s ea=%s wf=%s from=%s to=%s deposit=%s set=%s",
+                scenario.ea_id,
                 scenario.expert,
                 scenario.wf,
                 scenario.from_date,

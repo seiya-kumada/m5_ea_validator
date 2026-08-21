@@ -1,0 +1,106 @@
+; Wave Rider EA MT5 / WF1 dedicated parameter snapshot
+; Source: matching MT5 Tester profile for the WFO forward period.
+; Generic and other EA/WF sets are intentionally not modified.
+; === Main Settings ===
+Inp_EnableUI=false||false||0||true||N
+Inp_TradeMode=0||0||0||1||Y
+Inp_TradeDirection=0||0||0||2||N
+Inp_EnableSingleStrategyOnly=true||false||0||true||N
+Inp_EnableMultiCurrency=false||false||0||true||N
+Inp_MaxSpreadPoints=50||50||1||500||N
+Inp_CommentName=Wave Rider
+Inp_CommentAppendStrategy=true||false||0||true||N
+; === Position and Risk ===
+Inp_RiskProfile_Info=Cautious filters more setups; Balanced is the default; Aggressi
+Inp_RiskProfile=2||0||0||2||Y
+Inp_PositionSizeMethod=0||0||0||2||N
+Inp_FixedLotSize=0.01||0.01||0.001000||0.100000||N
+Inp_AutoRiskLevel=4000||4000||0||500||N
+Inp_ScaleByBalance=1000.0||1000.0||100.000000||10000.000000||N
+Inp_BaseLotSize=0.01||0.01||0.001000||0.100000||N
+; === Strategies ===
+Inp_SupportResistanceStrategy_Enabled=true||false||0||true||N
+Inp_SupportResistanceStrategy_TradeMagicNumber=77701||77701||1||777010||N
+Inp_PullbackStrategy_Enabled=true||false||0||true||N
+Inp_PullbackStrategy_TradeMagicNumber=77702||77702||1||777020||N
+Inp_TrendBreakoutStrategy_Enabled=true||false||0||true||N
+Inp_TrendBreakoutStrategy_TradeMagicNumber=77703||77703||1||777030||N
+Inp_M5Strategy_Enabled=true||false||0||true||N
+Inp_M5Strategy_TradeMagicNumber=77704||77704||1||777040||N
+Inp_VolumeStrategy_Enabled=true||false||0||true||N
+Inp_VolumeStrategy_TradeMagicNumber=77705||77705||1||777050||N
+Inp_MomentumStrategy_Enabled=true||false||0||true||N
+Inp_MomentumStrategy_TradeMagicNumber=77706||77706||1||777060||N
+Inp_ImpulseRiderStrategy_Enabled=false||false||0||true||N
+Inp_ImpulseRiderStrategy_TradeMagicNumber=77707||77707||1||777070||N
+; === Grid Settings ===
+Inp_Grid_Info_WideModes=Slow is the balanced default; Fast starts recovery sooner with 
+Inp_Grid_Info_StaticHybrid=Static uses fixed spacing; Hybrid keeps fixed minimums but wide
+Inp_Grid_RecoverySpacing=1||0||0||2||Y
+Inp_Grid_MaxOrders=10||10||1||100||N
+Inp_Grid_WideDeepTPEnabled=true||false||0||true||N
+Inp_Grid_ShowTPLine=true||false||0||true||N
+Inp_Grid_ShowNextGridLine=true||false||0||true||N
+; === Single Position Settings ===
+Inp_Single_SL_Pips=250.0||250.0||25.000000||2500.000000||N
+Inp_Single_TP_Pips=50.0||50.0||5.000000||500.000000||N
+Inp_Single_UseTrailingSL=true||false||0||true||N
+Inp_Single_TrailingStartPips=12.0||12.0||1.200000||120.000000||N
+Inp_Single_TrailingStepPips=3.0||3.0||0.300000||30.000000||N
+; === Time Management ===
+Inp_BaseGMTOffset=2||2||1||20||N
+Inp_EnableWeeklyFilter=true||false||0||true||N
+Inp_MondayToThursdayFrom=01:15;14:35;15:45
+Inp_MondayToThursdayTo=14:20;15:20;22:30
+Inp_FridayTrading_Enabled=true||false||0||true||N
+Inp_FridayTrading_From=01:30
+Inp_FridayTrading_To=10:00
+Inp_EnableHolidayFilter=true||false||0||true||N
+; === Protection Manager ===
+Inp_EnableDrawdownProtection=true||false||0||true||N
+Inp_DrawdownMode=0||0||0||1||N
+Inp_DrawdownThreshold=35.0||35.0||3.500000||350.000000||N
+Inp_IncludeBrokerCreditInProtection=false||false||0||true||N
+Inp_PreventTradingCloseToATH=false||false||0||true||N
+Inp_ATH_Timeframe=32769||0||0||49153||N
+Inp_ATH_LookbackPeriods=100||100||1||1000||N
+Inp_ATH_PercentageThreshold=0.25||0.25||0.025000||2.500000||N
+Inp_DynamicExit_Enabled=false||false||0||true||N
+Inp_DynamicExit_PctThreshold=0.5||0.5||0.050000||5.000000||N
+Inp_DynamicExit_WindowSec=120||120||1||1200||N
+; === News Filter ===
+Inp_NewsFilter_Enabled=true||false||0||true||N
+Inp_NewsFilter_FilterHigh=true||false||0||true||N
+Inp_NewsFilter_FilterMedium=false||false||0||true||N
+Inp_NewsFilter_EntryPauseBeforeMin=120||120||1||1200||N
+Inp_NewsFilter_EntryPauseAfterMin=120||120||1||1200||N
+Inp_NewsFilter_AdditionalCurrencies=USD
+Inp_NewsFilter_OtherMediumKeywords=
+Inp_NewsFilter_OtherFullDayKeywords=
+Inp_NewsFilter_BlockEventNextDay=true||false||0||true||N
+Inp_NewsFilter_BlockUSDBankHolidays=true||false||0||true||N
+; === [S01] Support & Resistance Strategy ===
+Inp_SupportResistanceStrategy_EntryWindowFrom=01:15
+Inp_SupportResistanceStrategy_EntryWindowTo=22:30
+Inp_SupportResistanceStrategy_Enable15MinTF=true||false||0||true||N
+Inp_SupportResistanceStrategy_Enable30MinTF=true||false||0||true||N
+Inp_SupportResistanceStrategy_UseBreakoutRetest=true||false||0||true||N
+; === [S02] Pullback Strategy ===
+Inp_PullbackStrategy_EntryWindowFrom=01:15
+Inp_PullbackStrategy_EntryWindowTo=13:00
+; === [S03] Trend Breakout Strategy ===
+Inp_TrendBreakoutStrategy_EntryWindowFrom=06:00;16:30
+Inp_TrendBreakoutStrategy_EntryWindowTo=11:00;21:00
+; === [S04] M5 Strategy ===
+Inp_M5Strategy_EntryWindowFrom=06:00
+Inp_M5Strategy_EntryWindowTo=21:00
+Inp_M5Strategy_RequireBounceCandle=false||false||0||true||N
+Inp_M5Strategy_StrictSellEntries=true||false||0||true||N
+Inp_M5Strategy_EnableM10Signal=false||false||0||true||N
+; === [S05] Smart-Money Volume Strategy ===
+Inp_VolumeStrategy_EntryWindowFrom=07:00
+Inp_VolumeStrategy_EntryWindowTo=20:00
+; === Dashboard Appearance ===
+Inp_UI_ScaleOverride=0.0||0.0||0.000000||0.000000||N
+Inp_UI_FontName=Calibri
+Inp_UI_BaseFontSize=9||9||1||90||N

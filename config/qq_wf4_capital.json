@@ -1,5 +1,7 @@
 {
   "scenario_id": "qq_wf4_capital",
+  "ea_id": "quantum_queen",
+  "artifact_prefix": "QQ",
   "wf": "WF4",
   "terminal_path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
   "data_directory": "C:\\Users\\s-kum\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075",
@@ -43,4 +45,3 @@
     "deal_sequence_sha256": "560c2c1a4c09b211f35bf8e40e176853272172bd99fd1e95aa876c83ba1545e7"
   }
 }
-

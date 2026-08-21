@@ -123,12 +123,12 @@ class ReportTests(unittest.TestCase):
 
     def test_parses_deal_sequence_and_accounting_totals(self) -> None:
         rows = """
-        <tr><td>2025.07.01 01:02:03</td><td>1</td><td>XAUUSD</td>
-        <td>buy</td><td>in</td><td>0.01</td><td>3300.10</td><td>1</td>
-        <td>-0.36</td><td>0.00</td><td>0.00</td><td>2999.64</td><td>entry</td></tr>
         <tr><td>2025.07.01 02:03:04</td><td>2</td><td>XAUUSD</td>
         <td>sell</td><td>out</td><td>0.01</td><td>3301.20</td><td>2</td>
         <td>-0.36</td><td>-0.05</td><td>1.10</td><td>3000.33</td><td>exit</td></tr>
+        <tr><td>2025.07.01 01:02:03</td><td>1</td><td>XAUUSD</td>
+        <td>buy</td><td>in</td><td>0.01</td><td>3300.10</td><td>1</td>
+        <td>-0.36</td><td>0.00</td><td>0.00</td><td>2999.64</td><td>entry</td></tr>
         """
         canonical = (
             "2025.07.01 01:02:03|buy|3300.10\n"

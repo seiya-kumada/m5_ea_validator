@@ -207,6 +207,12 @@ def _decimal(value: str) -> Decimal:
         raise ReportError(f"会計数値を解析できません: {value!r}") from exc
 
 
+def deal_identity_sha256(identities: tuple[str, ...] | list[str]) -> str:
+    """Hash every deal identity and duplicate count, independent of source row order."""
+    payload = ("\n".join(sorted(identities)) + "\n").encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def parse_deal_audit(path: Path) -> DealAudit:
     if not path.is_file():
         raise ReportError(f"HTMLレポートがありません: {path}")
@@ -230,10 +236,9 @@ def parse_deal_audit(path: Path) -> DealAudit:
         commission += _decimal(row[8])
         swap += _decimal(row[9])
         profit += _decimal(row[10])
-    payload = ("\n".join(canonical) + "\n").encode("utf-8")
     return DealAudit(
         deal_count=len(canonical),
-        deal_sequence_sha256=hashlib.sha256(payload).hexdigest(),
+        deal_sequence_sha256=deal_identity_sha256(canonical),
         commission_total=float(commission),
         swap_total=float(swap),
         deal_profit_total=float(profit),

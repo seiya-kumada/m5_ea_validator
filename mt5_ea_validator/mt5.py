@@ -67,7 +67,7 @@ def validate_environment(scenario: Scenario, *, require_stopped: bool = True) ->
         "terminal64.exe": scenario.terminal_path,
         "MT5データフォルダ": scenario.data_directory,
         "EA": scenario.expert_binary,
-        f"QQ/{scenario.wf}専用set": scenario.set_source,
+        f"{scenario.ea_id}/{scenario.wf}専用set": scenario.set_source,
         "Testerプロファイルフォルダ": scenario.tester_profile_directory,
     }
     missing = [f"{name}: {path}" for name, path in checks.items() if not path.exists()]
@@ -128,12 +128,15 @@ class MT5Executor:
             self.scenario.set_source,
             self.scenario.staged_set_path,
             self.scenario.required_set_values,
-            label=f"QQ/{self.scenario.wf}",
+            label=f"{self.scenario.ea_id}/{self.scenario.wf}",
         )
 
     def execute(self, deposit: int, output_directory: Path) -> TestExecution:
         output_directory.mkdir(parents=True, exist_ok=False)
-        report_path = output_directory / f"QQ_{self.scenario.wf}_CAPITAL_{deposit}.htm"
+        report_path = output_directory / (
+            f"{self.scenario.artifact_prefix}_{self.scenario.wf}"
+            f"_CAPITAL_{deposit}.htm"
+        )
         ini_path = output_directory / "tester.ini"
         if report_path.exists():
             raise MT5Error(f"既存レポートは上書きしません: {report_path}")

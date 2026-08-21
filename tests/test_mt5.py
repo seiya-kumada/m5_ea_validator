@@ -102,6 +102,35 @@ class MT5ConfigurationTests(unittest.TestCase):
 
         self.assertEqual(execution.report_path.name, "QQ_WF2_CAPITAL_3000.htm")
 
+    def test_report_name_uses_configured_ea_prefix(self) -> None:
+        cases = (
+            ("smart_gold_hunter_wf1_capital.json", "SGH_WF1_CAPITAL_3000.htm"),
+            ("wave_rider_wf3_capital.json", "WR_WF3_CAPITAL_3000.htm"),
+        )
+        for config_name, expected_name in cases:
+            with self.subTest(config=config_name), tempfile.TemporaryDirectory() as temporary:
+                scenario = load_scenario(PROJECT_ROOT / "config" / config_name)
+                root = Path(temporary)
+                scenario = replace(scenario, data_directory=root / "terminal-data")
+                output = root / "results" / "run-prefix" / "deposit_3000"
+
+                def fake_run(command, **kwargs):
+                    staging = (
+                        scenario.data_directory
+                        / "MQL5"
+                        / "Files"
+                        / "mt5_ea_validator"
+                        / "run-prefix"
+                        / "deposit_3000"
+                    )
+                    (staging / expected_name).write_text("report", encoding="utf-8")
+                    return subprocess.CompletedProcess(command, 0)
+
+                execution = MT5Executor(scenario, process_runner=fake_run).execute(
+                    3000, output
+                )
+                self.assertEqual(execution.report_path.name, expected_name)
+
     @patch("mt5_ea_validator.mt5.running_terminal_paths")
     def test_detects_only_the_target_terminal(self, running_paths) -> None:
         running_paths.return_value = (

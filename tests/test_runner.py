@@ -149,6 +149,26 @@ class RunnerTests(unittest.TestCase):
             {"net_profit", "trades", "deal_count", "deal_sequence_sha256"},
         )
 
+    def test_non_qq_scenario_is_recorded_and_runs_both_deposits(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            scenario = self._scenario(
+                temporary, "smart_gold_hunter_wf1_capital.json"
+            )
+            executor = FakeExecutor(net_profit=31.08, trades=91)
+            run_directory = run_campaign(
+                scenario,
+                executor=executor,
+                now_factory=lambda: datetime(2026, 8, 21, 12, 0, tzinfo=JST),
+            )
+            manifest = json.loads(
+                (run_directory / "run_manifest.json").read_text(encoding="utf-8")
+            )
+
+        self.assertEqual(executor.calls, [3000, 1000])
+        self.assertEqual(manifest["ea_id"], "smart_gold_hunter")
+        self.assertEqual(manifest["wf"], "WF1")
+        self.assertEqual(manifest["status"], "success")
+
 
 if __name__ == "__main__":
     unittest.main()
