@@ -6,6 +6,8 @@
 __pycache__/
 *.py[cod]
 *.pyo
+/mql5/*.ex5
+/mql5/*.log
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/

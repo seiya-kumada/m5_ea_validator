@@ -2,6 +2,106 @@
 
 この文書には、実装方針または仕様を変更する前に、理由と影響を記録する。
 
+## 2026-08-25: Transaction Cost Stressキャンペーンを完了済み結果から再開可能にする
+
+- 変更前: `run-cost-suite`は常に新しい実行フォルダを作成し、S=0から全ケースを再実行する。利用者のMT5利用のため安全に中断したキャンペーンには11件の完了結果があるが、そのまま再開する入口がない。
+- 変更理由: 完了済みの監査済みバックテストを重複実行せず、利用者が明示した中断地点から残りだけを安全に続行するため。
+- 変更内容: `run-cost-suite --resume-run <run-directory>`を追加する。再開時はsuite manifestのシナリオ順・ストレス水準・Depositと、各`result.json`のシナリオ・水準・カスタムシンボル・成果物を検証する。完了済みS=0から指標とdeal監査を復元し、未完了の組合せだけを既存順序で実行する。
+- 中断成果物: `result.json`がない既存ケースフォルダは完了扱いにしない。削除・上書きせず、同階層の`*_interrupted_<timestamp>`へ退避してから再実行する。
+- 再開時の実測追補: 初回再開はMT5起動前に`WinError 183`で停止した。プロジェクト側のケースフォルダに加えて、`MQL5/Files/mt5_ea_validator/<scenario>/<stress>`にも中断時の一時ステージングが残っていたためである。再開時はこの一時ステージングも内容を削除せず、同階層の`*_interrupted_<timestamp>`へ退避する。
+- 安全性: 再開先は当該プロジェクトの`data/transaction_cost_stress/results`直下に限定する。成功済みキャンペーンは再開しない。設定・build indexが元キャンペーンと一致しない場合はMT5起動前に停止する。
+
+## 2026-08-25: 正のストレス水準を片道2・5・10 pointsに確定する
+
+- 変更前: 実測前の初期候補を片道10・30・50 pointsとしていた。
+- 実測: 2024-01-01～2026-07-01の276,996,989 ticksで、PointとTick Sizeは0.01、元スプレッドは平均18.2166 points、中央値17、p95 26、p99 43だった。片道10・30・50 pointsは総スプレッドを20・60・100 points増やし、中央値に対して約118%・353%・588%の上乗せとなる。
+- 変更理由: 第1層を現実的な感応度評価として開始し、軽度・中度・強度の範囲でEAの劣化曲線を観測するため。初期候補の30・50 pointsは通常時の評価水準として過大で、早い段階で取引停止だけを測る可能性が高い。
+- 変更内容: 正の水準を片道2・5・10 pointsとする。元のBid/Ask差に対する追加総幅は4・10・20 points（0.04・0.10・0.20 USD）で、元スプレッド中央値に対して約24%・59%・118%の上乗せとなる。
+- 影響: S=0、EA/WF set、Deposit 3000 USD、No Delayは変更しない。10 pointsは強度水準として残し、30・50 pointsは今回の第1層から外す。
+
+## 2026-08-25: 実ティック欠損区間のM1生成価格にも同じストレスを適用する
+
+- 変更前: 実ティックは`Bid-stress`・`Ask+stress`へ加工する一方、Testerが実ティック欠損分の生成に使うM1バーは元XAUUSDの値を無加工で複製する設計だった。
+- 実測: S=0では全12 EA/WFがSafety Gateを通過し、Wave Rider/WF1も通常XAUUSDと同じ24分の欠損生成、18,362,232 ticks、382 Trades、764 dealsを再現した。このためM1バー複製自体は再現に必須である。
+- 変更理由: S>0でM1バーだけを無加工にすると、実ティックがある分にはストレスが入り、欠損24分などTester生成分には入らない不均一な入力系列になるため。
+- 変更内容: M1 OHLCはBid系列として全値を`stress_points * Point`だけ下げ、M1 `spread`は`2 * stress_points`だけ増やす。時刻、tick volume、real volumeは保持する。S=0は完全同一となる。source・加工後・保存後のM1監査ハッシュを分離し、加工後と保存後の一致を必須とする。
+- 複数buildの整合性: S=0とS>0のbuild indexを結合するときは、元ティックに加えて元M1の期間・件数・監査ハッシュも一致を必須とする。
+
+## 2026-08-25: M1バーと2024年からのpre-rollをカスタムシンボルへ複製する
+
+- 変更前: カスタムシンボルには2025-06-01以降の実ティックだけを登録し、最初のWF開始前1か月をpre-rollとしていた。
+- 実測: 保存後read-backでは177,614,782 ticksと価格ハッシュが一致したが、Testerログでは通常`XAUUSD`の履歴開始が2024-01-02、カスタムS=0の履歴開始が2025-06-02だった。また通常`XAUUSD`のWF1では実ティックが欠ける24分についてM1バーから`every tick generation`が使われ、通常18,362,232 ticksに対してカスタムは18,357,138 ticksだった。
+- 原因: 実ティックだけを登録すると、元シンボルで実ティックがない一方M1バーが存在する分を再現できない。さらにWave Riderの複数時間足指標に対するpre-rollも通常シンボルより短い。
+- 変更理由: S=0で通常シンボルと同じTester入力系列・事前履歴を再現し、Wave Rider/WF1の382 Trades・764 dealsを一致させるため。
+- 変更内容: 生成開始既定値を2024-01-01へ変更する。実ティック登録後、同期間の元`XAUUSD` M1バーを`CustomRatesReplace`で複製し、source/written/persistedのM1件数とOHLC・tick volume・spread・real volumeハッシュをmanifestで監査する。
+- 安全性: 既存のEA/WF set、通常XAUUSD、Capital Stress結果は変更しない。M1バー監査済みの新S=0が全Gateを通るまでS>0へ進まない。
+
+## 2026-08-25: カスタムティックを保存後に再読込して監査する
+
+- 変更前: `CopyTicksRange`で取得した入力配列と、`CustomTicksReplace`へ渡す加工後配列の件数・`time_msc`・Bid・Askを比較し、入力と出力が一致した時点でS=0生成を成功としていた。`CustomTicksReplace`後のカスタムシンボルを再読込していなかった。
+- 実測: 通常`XAUUSD`のWave Rider/WF1は382 Trades、764 deals、基準dealハッシュ一致で再現した一方、S=0は381 Trades、762 dealsとなった。Strategy Testerログでは通常シンボルが18,362,232 ticks、S=0カスタムシンボルが18,357,138 ticksで、5,094 ticks少なかった。S=0を再生成しても入力側の総件数177,614,782とハッシュ`E4E0438B806BE8C2`は変わらなかった。
+- 変更理由: 書込み前配列の一致だけでは、MT5のカスタムティックDBに永続化された系列の一致を証明できず、S=0 Safety Gateの前提を満たさないため。同一`time_msc`の複数ticksはMQL5公式仕様で許容されるので、原因未確定のまま時刻を加工することもしない。
+- 変更内容: 各日について`CustomTicksReplace`後にカスタムシンボルを`CopyTicksRange`で再読込し、永続化件数と`time_msc`・Bid・Askハッシュを検証する。生成manifest/build indexをschema v2へ更新し、永続化件数・ハッシュを記録する。read-back不一致は生成失敗とする。
+- 互換性: read-back監査を持たないschema v1 build indexは、以後のTransaction Cost Stress実行には使用しない。新しいS=0が全EA/WFのGateを通るまでS>0へ進まない。
+
+## 2026-08-25: Transaction Cost Stress第1層を独立したカスタムシンボル試験として追加
+
+- 変更前: ツールは通常のTitanFX `XAUUSD`を固定し、初期入金だけを変えるCapital Stressを対象としている。
+- 変更理由: 利用者の指示により、Quantum Queen、Smart Gold Hunter、Wave Riderを共通条件でスリッページ評価する3層構成のうち、第1層から実施するため。MT5 Strategy Testerには任意の実スリッページを直接注入する設定がなく、QQの`InpSlippage`も強制約定差ではなく最大許容偏差である。
+- 決定: 第1層は元XAUUSDティックの`Bid-stress`、`Ask+stress`で作るカスタムシンボルを使い、`adverse execution-price proxy（不利約定価格・取引コストストレス）`として評価する。純粋な約定スリッページとは表現しない。
+- 分離方針: 既存Capital Stressの設定・`symbol == XAUUSD`検証・成果物は変更しない。カスタムシンボル生成とTransaction Cost Stressの設定・実行経路を独立追加する。各EA/WF専用setも変更しない。
+- 比較条件: 全EA/WFで既存基準があるDeposit 3000 USDを使用し、No Delayを維持して遅延耐性との交絡を避ける。
+- 安全性: 最初に`stress_points=0`を生成し、既存Safety Gateで通常XAUUSD結果を再現できた場合だけ正のストレスへ進む。S=0不一致は、EAの銘柄名依存や銘柄仕様・ティック差を含む方法上の不成立として停止・調査する。
+- ストレス水準: 初期候補は片道0、10、30、50 pointsとするが、Point、Tick Size、実スプレッド分布を取得後に確定する。変更する場合は実行前に本履歴へ理由と影響を追記する。
+- 成果物: 生成監査とレポートは`data/transaction_cost_stress`配下へ保存し、Git管理しない。
+
+## 2026-08-25: MetaEditorコンパイル待機上限を実測に合わせて延長
+
+- 変更前: MQL5補助スクリプトのMetaEditorコンパイル待機上限を120秒として実装した。
+- 実測: `BuildCostStressSymbol.mq5`から`.ex5`は正常生成されたが、MetaEditorプロセスの終了確認まで約160秒を要した。
+- 変更理由: 正常なコンパイルをタイムアウト失敗として扱わないため。
+- 変更内容: コンパイル待機上限を300秒へ延長する。カスタムシンボル生成およびバックテストの条件・判定には影響しない。
+
+## 2026-08-25: MetaEditorコンパイル成功判定を生成物・ログ中心に変更
+
+- 変更前: MetaEditorのプロセス終了コードが0であり、`.ex5`が存在することをコンパイル成功条件としていた。
+- 実測: 自動実行では終了コード1だったが、`.ex5`は生成され、コンパイルログは`Result: 0 errors, 0 warnings`だった。カスタムシンボル生成前にアプリ側ゲートが停止したため、既存MT5データや試験結果への影響はない。
+- 変更理由: MetaEditorの終了コード1をコンパイルエラーと同一視すると、正常な生成物を誤って失敗扱いするため。
+- 変更内容: `.ex5`の存在と、コンパイルログの`Result`行におけるerrors=0を必須の成功条件とする。終了コードは監査情報として保持するが、単独では失敗条件にしない。ログ欠落、Result行欠落、errors>0、生成物欠落は引き続き失敗とする。
+
+## 2026-08-25: カスタムシンボル生成スクリプトを既存チャート上で起動
+
+- 変更前: Startup設定に`Symbol=XAUUSD`を指定し、起動時に追加チャートを開いてMQL5スクリプトを実行する設計だった。
+- 実測: TitanFX MT5ログに`open charts limit reached`および`open chart 'XAUUSD' failed`が記録され、スクリプトは開始されなかった。待機していた今回起動分のMT5 PID 24332だけを明示確認後に終了した。生成マニフェストがなく、カスタムシンボルとバックテスト結果は作成されていない。
+- 変更理由: 利用者の保存済みチャート構成を削除・変更せず、チャート上限に左右されず補助スクリプトを開始するため。
+- 変更内容: Startup設定から`Symbol`を省略し、MT5公式仕様に従って現在のプロファイルの先頭チャート上でスクリプトを実行する。スクリプトが処理する元銘柄はチャートの銘柄ではなく`InpSourceSymbol=XAUUSD`で明示するため、ティック生成条件には影響しない。
+
+## 2026-08-25: 元データのゼロスプレッドティックをS=0で許容
+
+- 変更前: 加工後ティックの価格条件を`Ask > Bid`としていた。
+- 実測: S=0生成中、2026-05-25の元XAUUSDティック（time_msc=1779670814645）に`Bid=Ask=4529.57`が存在し、元データをそのまま保持した正常なS=0ティックを不正扱いして停止した。
+- 変更理由: S=0は元のリアルティックを一切変えず再現することが目的であり、元データに存在するゼロスプレッドを排除するとティック系列が変わるため。
+- 変更内容: 共通価格条件を`Bid > 0`かつ`Ask >= Bid`へ変更する。正のstressでは`Bid-stress`、`Ask+stress`により`Ask > Bid`となる。負スプレッドは従来どおり拒否する。
+- 失敗成果物: 途中まで書き込まれた一意な失敗シンボル`XAUUSD_TCS0_ab3298ca`は上書き・試験利用せず残し、次回は別の一意名で新規生成する。
+
+## 2026-08-25: カスタムシンボル試験へTitanFX Commissionを一時注入
+
+- 変更前: `CustomSymbolCreate`でXAUUSDの銘柄仕様をコピーすれば、通常XAUUSDと同じCommissionも適用されると想定していた。
+- 実測: QQ/WF1/S=0はTrades 147、294 dealの日時・方向・価格、Swap -20.16 USD、deal Profit 179.91 USDが通常XAUUSDと完全一致した。一方、通常XAUUSDのCommission -105.84 USDがカスタムシンボルでは0 USDとなり、Net Profitが53.91 USDではなく159.75 USDになった。差105.84 USDはCommission欠落と完全一致する。
+- 原因: Commissionはカスタムシンボルの価格・銘柄仕様ではなく、Strategy Testerの取引口座条件として別管理されるため。
+- 根拠: MT5公式ヘルプはAdvanced Testing SettingsでCommissionをカスタム設定できるとしている。既存12基準の実レポートを横断確認した結果、全EA/WFでCommissionは1 deal当たり-0.36 USDだった。全試験は固定0.01 lotであり、これは36 USD/lot/sideに一致する。
+- 変更内容: TitanFX demo用Tester group設定に、Instant、entry/exit両方、volume基準、Deposit currency、36 USD/lotのCommissionを設定する。S=0でCommission、Net Profit、PF、RF、Sharpe、DDまで既存基準を再確認する。
+- 安全性: `MQL5\\Profiles\\Tester\\Groups\\TitanFX-MT5-Demo_demo.txt`は試験実行中だけ一時配置する。既存ファイルがある場合は内容にかかわらず上書きせず停止する。今回作成した一時ファイルだけをMT5終了後に削除し、同内容を各`data/transaction_cost_stress`結果フォルダへ監査コピーする。
+- 既存結果: CommissionなしのS=0結果は方法検証の失敗成果物として保持し、正のストレスには使用しない。
+
+## 2026-08-25: Commissionをentry時の往復一括課金へ合わせる
+
+- 変更前: 36 USD/lotをentry/exit両方へ課金し、0.01 lotの全dealで-0.36 USDとした。
+- 実測: Commission総額、Net Profit、Trades、deal系列、Swap、deal Profitは通常XAUUSDと一致したが、PF 1.31（基準1.25）、Sharpe 2.96（2.99）、Equity DD 3.26%（3.35%）が不一致だった。
+- 明細比較: 通常XAUUSDは0.01 lotのentry dealで-0.72 USDを往復分として一括課金し、exit dealは0 USDだった。初回カスタム設定はentry/exitそれぞれ-0.36 USDで、総額は同じだが残高系列と指標計算のタイミングが異なった。
+- 変更理由: S=0で総損益だけでなく、通常XAUUSDと同じCommission計上時点・残高系列・PF/RF/Sharpe/DDを再現するため。
+- 変更内容: Commissionを72 USD/lot、entryのみへ変更する。0.01 lotの各entry dealで-0.72 USDとなり、exitでは課金しない。総Commissionは取引系列が同じ場合に従来どおり-105.84 USDとなる。
+
 ## 2026-08-20: QQ/WF1パラメータの正本
 
 - 決定: Net Profit +53.98 USD、Trades 147を再現したTesterログおよびWF1プロファイルをQQ/WF1の正本とする。
