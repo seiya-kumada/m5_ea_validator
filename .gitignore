@@ -1,4 +1,5 @@
-# Backtest outputs and other local data are intentionally never versioned.
+# Raw backtest outputs and other local data are ignored. Final reports and
+# related images may be force-added only when explicitly approved.
 /data/
 
 # Python environments and generated caches.

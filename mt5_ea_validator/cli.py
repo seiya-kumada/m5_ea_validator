@@ -12,6 +12,12 @@ from mt5_ea_validator.configuration import (
 from mt5_ea_validator.mt5 import MT5Error, validate_environment
 from mt5_ea_validator.runner import CampaignError, run_campaign
 from mt5_ea_validator.setfile import SetFileError, validate_dedicated_set
+from mt5_ea_validator.slippage_tolerance import (
+    DEFAULT_SLIPPAGE_POINTS,
+    SlippageToleranceCampaignError,
+    SlippageToleranceError,
+    run_slippage_tolerance_suite,
+)
 from mt5_ea_validator.transaction_cost import (
     DEFAULT_BUILD_FROM,
     DEFAULT_BUILD_TO_EXCLUSIVE,
@@ -77,12 +83,54 @@ def _parser() -> argparse.ArgumentParser:
         type=Path,
         help="中断済み実行フォルダの完了結果を検証し、未完了ケースだけ再開します",
     )
+
+    slippage_suite = subparsers.add_parser(
+        "run-slippage-suite",
+        help="QQのEA側許容偏差を比較するスリッページ耐性検証第2層を実行します",
+    )
+    slippage_suite.add_argument("--config", type=Path, nargs="+", required=True)
+    slippage_suite.add_argument(
+        "--slippage-points",
+        type=int,
+        nargs="+",
+        default=list(DEFAULT_SLIPPAGE_POINTS),
+        help="比較するInpSlippage水準。既存基準100を必ず含めます",
+    )
+    slippage_suite.add_argument(
+        "--execution-mode",
+        type=int,
+        default=0,
+        help="MT5 ExecutionMode: 0=No Delay, -1=Random Delay, 正数=固定ms",
+    )
+    slippage_suite.add_argument(
+        "--resume-run",
+        type=Path,
+        help="中断済みの第2層実行フォルダから未完了ケースだけ再開します",
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        if args.command == "run-slippage-suite":
+            scenarios = tuple(load_scenario(path) for path in args.config)
+            for scenario in scenarios:
+                validate_dedicated_set(
+                    scenario.set_source,
+                    scenario.required_set_values,
+                    label=f"{scenario.ea_id}/{scenario.wf}",
+                )
+            run_directory = run_slippage_tolerance_suite(
+                scenarios,
+                slippage_points=args.slippage_points,
+                execution_mode=args.execution_mode,
+                resume_directory=args.resume_run,
+                progress=print,
+            )
+            print(f"Slippage tolerance Layer 2 completed: {run_directory}")
+            return 0
+
         if args.command == "run-cost-suite":
             scenarios = tuple(load_scenario(path) for path in args.config)
             for scenario in scenarios:
@@ -132,11 +180,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ERROR: {exc}", file=sys.stderr)
         print(f"Artifacts: {exc.run_directory}", file=sys.stderr)
         return 1
+    except SlippageToleranceCampaignError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        print(f"Artifacts: {exc.run_directory}", file=sys.stderr)
+        return 1
     except (
         ConfigurationError,
         SetFileError,
         MT5Error,
         TransactionCostError,
+        SlippageToleranceError,
         OSError,
         ValueError,
     ) as exc:

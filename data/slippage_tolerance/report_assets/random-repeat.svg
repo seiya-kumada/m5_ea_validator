@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">ランダム延滞100 pointsの再実行比較</title>
+  <desc id="chart-desc">同じInpSlippage 100 pointsをランダム延滞で再実行したNet ProfitをWF別に比較する。4WFすべてで異なる。</desc>
+  <style>
+    .chart-background { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 24px; font-weight: 500; }
+    .subtitle { font-size: 16px; fill: #374151; }
+    .panel-title { font-size: 18px; font-weight: 500; }
+    .axis-label { font-size: 14px; fill: #374151; }
+    .value-label { font-size: 14px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .legend-label { font-size: 15px; font-weight: 500; }
+    .axis { stroke: #4b5563; stroke-width: 1.4; }
+    .grid { stroke: #cbd0d7; stroke-width: 1; }
+    .panel { fill: none; stroke: #aeb5bf; stroke-width: 1.2; }
+    .line { fill: none; stroke-width: 3; }
+    .mark { stroke-width: 2.5; fill: #ffffff; }
+    .series-1 { stroke: #2463a9; fill: #2463a9; }
+    .series-2 { stroke: #b25b22; fill: #b25b22; }
+    .series-3 { stroke: #2d8062; fill: #2d8062; }
+    .bad { stroke: #a33a3a; fill: #a33a3a; }
+    .neutral { stroke: #69717d; fill: #69717d; }
+    @media (prefers-color-scheme: dark) {
+      .chart-background { fill: #17191d; }
+      text { fill: #f3f4f6; } .subtitle, .axis-label { fill: #d1d5db; }
+      .value-label { stroke: #17191d; }
+      .axis { stroke: #c5cad1; } .grid, .panel { stroke: #555c66; } .mark { fill: #17191d; }
+      .series-1 { stroke: #6da9e5; fill: #6da9e5; }
+      .series-2 { stroke: #e59a66; fill: #e59a66; }
+      .series-3 { stroke: #70c3a3; fill: #70c3a3; }
+      .bad { stroke: #e08080; fill: #e08080; }
+      .neutral { stroke: #aeb5bf; fill: #aeb5bf; }
+    }
+  </style>
+  <rect class="chart-background" x="0" y="0" width="1100" height="500" />
+  <text class="title" x="70" y="40">ランダム延滞は同じ100 pointsでも再現しない</text>
+  <text class="subtitle" x="70" y="67">Net Profit（USD）。各WFは値域が大きく異なるため、パネルごとにローカル尺度を使用</text>
+  <rect class="series-1" x="750" y="31" width="18" height="18" opacity="0.7" />
+  <text class="legend-label" x="778" y="46">初回</text>
+  <rect class="series-2" x="875" y="31" width="18" height="18" opacity="0.7" />
+  <text class="legend-label" x="903" y="46">再実行</text>
+  <rect class="panel" x="70" y="105" width="230" height="320" />
+  <text class="panel-title" x="185.0" y="134" text-anchor="middle">WF1</text>
+  <line class="axis" x1="100" y1="342.2" x2="275" y2="342.2" />
+  <text class="axis-label" x="94" y="347.2" text-anchor="end">0</text>
+  <rect class="series-1" x="140" y="176.8" width="36" height="165.3" opacity="0.7" />
+  <text class="value-label" x="158" y="168.8" text-anchor="middle">59.96</text>
+  <text class="axis-label" x="158" y="386" text-anchor="middle">初回</text>
+  <rect class="series-2" x="215" y="187.3" width="36" height="154.8" opacity="0.7" />
+  <text class="value-label" x="233" y="179.3" text-anchor="middle">56.16</text>
+  <text class="axis-label" x="233" y="386" text-anchor="middle">再実行</text>
+  <text class="legend-label" x="185.0" y="413" text-anchor="middle">差 -3.80 USD</text>
+  <rect class="panel" x="328" y="105" width="230" height="320" />
+  <text class="panel-title" x="443.0" y="134" text-anchor="middle">WF2</text>
+  <line class="axis" x1="358" y1="342.2" x2="533" y2="342.2" />
+  <text class="axis-label" x="352" y="347.2" text-anchor="end">0</text>
+  <rect class="series-1" x="398" y="176.8" width="36" height="165.3" opacity="0.7" />
+  <text class="value-label" x="416" y="168.8" text-anchor="middle">183.51</text>
+  <text class="axis-label" x="416" y="386" text-anchor="middle">初回</text>
+  <rect class="series-2" x="473" y="189.0" width="36" height="153.1" opacity="0.7" />
+  <text class="value-label" x="491" y="181.0" text-anchor="middle">169.98</text>
+  <text class="axis-label" x="491" y="386" text-anchor="middle">再実行</text>
+  <text class="legend-label" x="443.0" y="413" text-anchor="middle">差 -13.53 USD</text>
+  <rect class="panel" x="586" y="105" width="230" height="320" />
+  <text class="panel-title" x="701.0" y="134" text-anchor="middle">WF3</text>
+  <line class="axis" x1="616" y1="342.2" x2="791" y2="342.2" />
+  <text class="axis-label" x="610" y="347.2" text-anchor="end">0</text>
+  <rect class="series-1" x="656" y="176.8" width="36" height="165.3" opacity="0.7" />
+  <text class="value-label" x="674" y="168.8" text-anchor="middle">321.61</text>
+  <text class="axis-label" x="674" y="386" text-anchor="middle">初回</text>
+  <rect class="series-2" x="731" y="192.3" width="36" height="149.9" opacity="0.7" />
+  <text class="value-label" x="749" y="184.3" text-anchor="middle">291.57</text>
+  <text class="axis-label" x="749" y="386" text-anchor="middle">再実行</text>
+  <text class="legend-label" x="701.0" y="413" text-anchor="middle">差 -30.04 USD</text>
+  <rect class="panel" x="844" y="105" width="230" height="320" />
+  <text class="panel-title" x="959.0" y="134" text-anchor="middle">WF4</text>
+  <line class="axis" x1="874" y1="182.4" x2="1049" y2="182.4" />
+  <text class="axis-label" x="868" y="187.4" text-anchor="end">0</text>
+  <rect class="series-1" x="914" y="182.4" width="36" height="159.8" opacity="0.7" />
+  <text class="value-label" x="932" y="360.2" text-anchor="middle">-3,032.92</text>
+  <text class="axis-label" x="932" y="386" text-anchor="middle">初回</text>
+  <rect class="series-2" x="989" y="176.8" width="36" height="5.5" opacity="0.7" />
+  <text class="value-label" x="1007" y="168.8" text-anchor="middle">104.79</text>
+  <text class="axis-label" x="1007" y="386" text-anchor="middle">再実行</text>
+  <text class="legend-label" x="959.0" y="413" text-anchor="middle">差 +3,137.71 USD</text>
+</svg>

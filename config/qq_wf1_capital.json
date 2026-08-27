@@ -47,6 +47,10 @@
     "sharpe_ratio": 2.99,
     "sharpe_ratio_tolerance": 0.01,
     "equity_drawdown_percent": 3.35,
-    "equity_drawdown_percent_tolerance": 0.01
+    "equity_drawdown_percent_tolerance": 0.01,
+    "accounting_net_profit": 53.91,
+    "commission_total": -105.84,
+    "swap_total": -20.16,
+    "deal_profit_total": 179.91
   }
 }

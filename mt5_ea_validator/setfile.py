@@ -37,6 +37,36 @@ def parse_set_values(text: str) -> dict[str, str]:
     return values
 
 
+def override_set_values(text: str, overrides: dict[str, str]) -> str:
+    """Replace only current values in an MT5 set file, preserving optimization fields."""
+    if not overrides:
+        raise SetFileError("set override must contain at least one value")
+    rendered: list[str] = []
+    matches = {name: 0 for name in overrides}
+    for raw_line in text.splitlines():
+        stripped = raw_line.strip()
+        if not stripped or stripped.startswith(";") or "=" not in raw_line:
+            rendered.append(raw_line)
+            continue
+        prefix, raw_value = raw_line.split("=", 1)
+        name = prefix.strip()
+        if name not in overrides:
+            rendered.append(raw_line)
+            continue
+        matches[name] += 1
+        _current, separator, optimization_fields = raw_value.partition("||")
+        replacement = str(overrides[name])
+        if separator:
+            replacement += separator + optimization_fields
+        rendered.append(f"{prefix}={replacement}")
+    invalid = {name: count for name, count in matches.items() if count != 1}
+    if invalid:
+        details = ", ".join(f"{name}={count}" for name, count in invalid.items())
+        raise SetFileError(f"set override target must occur exactly once: {details}")
+    trailing_newline = "\n" if text.endswith(("\n", "\r")) else ""
+    return "\n".join(rendered) + trailing_newline
+
+
 def validate_dedicated_set(
     path: Path,
     required_values: dict[str, str],

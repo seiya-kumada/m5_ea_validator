@@ -1,5 +1,17 @@
 # テスト結果
 
+## 第2層スリッページ耐性検証・総合報告書（2026-08-27）
+
+完了済み4 suite・64バックテストを入力として、目的・結論・詳細の順に再構成した総合報告書とSVGグラフ3点を生成した。報告書固有検証で64件の成功状態、詳細表64行、No Delay・固定188msの32/32完全一致、ランダム100 points再実行の4/4不一致、Markdown画像リンク、SVG XML、UTF-8を再確認した。
+
+- 生成: `uv run --no-cache python data/slippage_tolerance/build_layer2_report.py`
+- 再検証: `uv run --no-cache python data/slippage_tolerance/build_layer2_report.py --check`
+- 結果: `LAYER2_REPORT_OK cases=64`
+- 回帰テスト: `uv run --no-cache python -m unittest discover -s tests -v`
+- 結果: 58 tests PASS
+- 視覚検証: SVG 3点をEdgeで実描画し、日本語文字、凡例、軸、値ラベルの見切れ・重なりがないことを確認
+- `git diff --check`: PASS（改行コード警告のみ）
+
 ## 追加Capital Stress（2026-08-21）
 
 `--target-deposit`を使用し、Wave Riderは全WFを3000→1500 USD、Quantum QueenとSmart Gold Hunterは全WFを3000→750 USDで実行した。12件すべてで3000 USD Safety GateがPASSし、指定資金まで正常終了した。
@@ -176,3 +188,16 @@ Net Profit差は `minor accounting difference` として記録した。自動結
 WF2の3000 USDは手動Net Profit +213.27 USDと完全一致した。WF3は手動+397.15 USDに対して自動+397.10 USD（差-0.05 USD）、WF4は手動+362.09 USDに対して自動+362.06 USD（差-0.03 USD）で、いずれも `minor accounting difference` として許容範囲内。Trades、deal数、全dealの日時・方向・価格は各手動ログと完全一致した。
 
 全WFで3000／1000 USD間の日時、方向、価格、Commission、Swap、各deal Profitは1件ずつ完全一致した。資金不足、証拠金不足、Stop Outはない。市場休止による注文・クローズ失敗は両Depositで同一に発生し、資金水準による事象ではない。
+
+## スリッページ耐性検証 第2層（2026-08-27）
+
+- 対象: Quantum Queen、WF1～WF4、Deposit 3,000 USD
+- `InpSlippage`: 100、0、2、5、10 points
+- 評価対象: No Delay 20件、固定188ms 20件、ランダム延滞20件、ランダム100 points独立再実行4件の合計64件
+- 自動テスト: 58件成功
+
+No Delayと固定188msでは、100以外の各16件すべてでNet Profit、Trades、PF、RF、Sharpe、Equity DD、deal件数、deal系列ハッシュが100-point基準と完全一致した。`InpSlippage`の変更効果は観測されなかった。
+
+ランダム延滞では16件すべてで100-point参照と取引系列・主要指標が変化したが、同じ100 pointsを独立再実行しても4WFすべてで取引系列と指標が再現しなかった。したがって、ランダム延滞の単発水準差は乱数系列の交絡を含み、`InpSlippage`の効果とは判定しない。
+
+No DelayのWF1基準は取引系列、Commission、deal Profitが過去基準と一致し、Net Profit差-0.95 USDがSwap差-0.95 USDと完全一致したため、`PASS_WITH_ACCOUNTING_DRIFT`として現在の100-point結果を内部比較基準に採用した。

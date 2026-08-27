@@ -19,6 +19,10 @@ class Benchmark:
     trades: int
     deal_count: int
     deal_sequence_sha256: str
+    accounting_net_profit: float | None = None
+    commission_total: float | None = None
+    swap_total: float | None = None
+    deal_profit_total: float | None = None
     profit_factor: float | None = None
     profit_factor_tolerance: float | None = None
     recovery_factor: float | None = None
@@ -221,3 +225,17 @@ def validate_scenario(scenario: Scenario) -> None:
             raise ConfigurationError(
                 f"{expected_name}と{tolerance_name}は両方指定するか両方省略してください"
             )
+
+    accounting_values = (
+        scenario.benchmark.accounting_net_profit,
+        scenario.benchmark.commission_total,
+        scenario.benchmark.swap_total,
+        scenario.benchmark.deal_profit_total,
+    )
+    if any(value is not None for value in accounting_values) and any(
+        value is None for value in accounting_values
+    ):
+        raise ConfigurationError(
+            "accounting_net_profit, commission_total, swap_total, and "
+            "deal_profit_total must be specified together"
+        )

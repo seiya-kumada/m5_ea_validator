@@ -75,3 +75,17 @@ uv run python -m mt5_ea_validator run-cost-suite `
   --config config\qq_wf1_capital.json config\qq_wf2_capital.json `
   --resume-run <data\transaction_cost_stress\results\run-id>
 ```
+
+## スリッページ耐性検証 第2層
+
+Quantum QueenのWF1～WF4について、元のWF専用setを変更せず、`InpSlippage`の現在値だけを上書きした派生setで許容偏差感応度を比較します。100 pointsを各実行モード内の基準として先に実行し、その後0・2・5・10 pointsへ進みます。
+
+```powershell
+uv run python -m mt5_ea_validator run-slippage-suite `
+  --config config\qq_wf1_capital.json config\qq_wf2_capital.json `
+           config\qq_wf3_capital.json config\qq_wf4_capital.json `
+  --slippage-points 0 2 5 10 100 `
+  --execution-mode 0
+```
+
+`--execution-mode`は、`0`がNo Delay、`188`が固定188ms、`-1`がランダム延滞です。中断時は`--resume-run <result-directory>`で未完了ケースだけ再開できます。生の成果物は`data/slippage_tolerance`配下へ保存され、Git管理されません。利用者が明示した最終報告書と関連画像だけは例外として追跡します。

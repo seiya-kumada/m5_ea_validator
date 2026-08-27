@@ -6,6 +6,7 @@ from pathlib import Path
 
 from mt5_ea_validator.setfile import (
     SetFileError,
+    override_set_values,
     parse_set_values,
     read_set_text,
     stage_dedicated_set,
@@ -21,6 +22,23 @@ SET_PATH = PROJECT_ROOT / "config" / "sets" / "QQ_WF1.set"
 
 
 class SetFileTests(unittest.TestCase):
+    def test_override_changes_only_current_value(self) -> None:
+        source = (
+            "; comment\r\n"
+            "InpSlippage=100||100||1||1000||N\r\n"
+            "InpOrdersMax=10||10||10||100||Y\r\n"
+        )
+
+        rendered = override_set_values(source, {"InpSlippage": "5"})
+
+        self.assertIn("InpSlippage=5||100||1||1000||N", rendered)
+        self.assertIn("InpOrdersMax=10||10||10||100||Y", rendered)
+        self.assertEqual(parse_set_values(rendered)["InpSlippage"], "5")
+
+    def test_override_requires_exactly_one_target(self) -> None:
+        with self.assertRaisesRegex(SetFileError, "exactly once"):
+            override_set_values("InpOrdersMax=10\n", {"InpSlippage": "5"})
+
     def test_dedicated_set_has_required_values(self) -> None:
         values = validate_qq_wf1_set(SET_PATH)
 

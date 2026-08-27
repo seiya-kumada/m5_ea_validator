@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="720" viewBox="0 0 1100 720" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">再現可能な条件におけるInpSlippage感応度</title>
+  <desc id="chart-desc">No Delayと固定188msについて、WF別Net ProfitをInpSlippage水準ごとに示す。各モード内の線は水平である。</desc>
+  <style>
+    .chart-background { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 24px; font-weight: 500; }
+    .subtitle { font-size: 16px; fill: #374151; }
+    .panel-title { font-size: 18px; font-weight: 500; }
+    .axis-label { font-size: 14px; fill: #374151; }
+    .value-label { font-size: 14px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .legend-label { font-size: 15px; font-weight: 500; }
+    .axis { stroke: #4b5563; stroke-width: 1.4; }
+    .grid { stroke: #cbd0d7; stroke-width: 1; }
+    .panel { fill: none; stroke: #aeb5bf; stroke-width: 1.2; }
+    .line { fill: none; stroke-width: 3; }
+    .mark { stroke-width: 2.5; fill: #ffffff; }
+    .series-1 { stroke: #2463a9; fill: #2463a9; }
+    .series-2 { stroke: #b25b22; fill: #b25b22; }
+    .series-3 { stroke: #2d8062; fill: #2d8062; }
+    .bad { stroke: #a33a3a; fill: #a33a3a; }
+    .neutral { stroke: #69717d; fill: #69717d; }
+    @media (prefers-color-scheme: dark) {
+      .chart-background { fill: #17191d; }
+      text { fill: #f3f4f6; } .subtitle, .axis-label { fill: #d1d5db; }
+      .value-label { stroke: #17191d; }
+      .axis { stroke: #c5cad1; } .grid, .panel { stroke: #555c66; } .mark { fill: #17191d; }
+      .series-1 { stroke: #6da9e5; fill: #6da9e5; }
+      .series-2 { stroke: #e59a66; fill: #e59a66; }
+      .series-3 { stroke: #70c3a3; fill: #70c3a3; }
+      .bad { stroke: #e08080; fill: #e08080; }
+      .neutral { stroke: #aeb5bf; fill: #aeb5bf; }
+    }
+  </style>
+  <rect class="chart-background" x="0" y="0" width="1100" height="720" />
+  <text class="title" x="70" y="38">再現可能な条件では全水準が同一</text>
+  <text class="subtitle" x="70" y="64">Net Profit（USD）— 各線が水平であることが、InpSlippage変更による差が0であることを示す</text>
+  <line class="series-1" x1="735" y1="42" x2="775" y2="42" stroke-width="3" />
+  <text class="legend-label" x="785" y="47">No Delay</text>
+  <line class="series-2" x1="905" y1="42" x2="945" y2="42" stroke-width="3" />
+  <text class="legend-label" x="955" y="47">固定188ms</text>
+  <rect class="panel" x="70" y="105" width="470" height="250" />
+  <text class="panel-title" x="88" y="133">WF1</text>
+  <text class="axis-label" x="522" y="133" text-anchor="end">期間: 2025-07-01 ～ 2025-09-30</text>
+  <line class="grid" x1="122" y1="310.0" x2="490" y2="310.0" />
+  <text class="axis-label" x="115" y="315.0" text-anchor="end">40.7</text>
+  <line class="grid" x1="122" y1="227.5" x2="490" y2="227.5" />
+  <text class="axis-label" x="115" y="232.5" text-anchor="end">49.6</text>
+  <line class="grid" x1="122" y1="145.0" x2="490" y2="145.0" />
+  <text class="axis-label" x="115" y="150.0" text-anchor="end">58.4</text>
+  <text class="axis-label" x="130" y="340" text-anchor="middle">0</text>
+  <text class="axis-label" x="215" y="340" text-anchor="middle">2</text>
+  <text class="axis-label" x="300" y="340" text-anchor="middle">5</text>
+  <text class="axis-label" x="385" y="340" text-anchor="middle">10</text>
+  <text class="axis-label" x="470" y="340" text-anchor="middle">100</text>
+  <text class="axis-label" x="305" y="354" text-anchor="middle">InpSlippage (points)</text>
+  <polyline class="line series-1" points="130,195.8 215,195.8 300,195.8 385,195.8 470,195.8" />
+  <circle class="mark series-1" cx="130" cy="195.8" r="4.5" />
+  <circle class="mark series-1" cx="215" cy="195.8" r="4.5" />
+  <circle class="mark series-1" cx="300" cy="195.8" r="4.5" />
+  <circle class="mark series-1" cx="385" cy="195.8" r="4.5" />
+  <circle class="mark series-1" cx="470" cy="195.8" r="4.5" />
+  <polyline class="line series-2" points="130,259.2 215,259.2 300,259.2 385,259.2 470,259.2" />
+  <circle class="mark series-2" cx="130" cy="259.2" r="4.5" />
+  <circle class="mark series-2" cx="215" cy="259.2" r="4.5" />
+  <circle class="mark series-2" cx="300" cy="259.2" r="4.5" />
+  <circle class="mark series-2" cx="385" cy="259.2" r="4.5" />
+  <circle class="mark series-2" cx="470" cy="259.2" r="4.5" />
+  <text class="value-label" x="470" y="186.8" text-anchor="end">52.96</text>
+  <text class="value-label" x="470" y="277.2" text-anchor="end">46.16</text>
+  <rect class="panel" x="585" y="105" width="470" height="250" />
+  <text class="panel-title" x="603" y="133">WF2</text>
+  <text class="axis-label" x="1037" y="133" text-anchor="end">期間: 2025-10-01 ～ 2025-12-31</text>
+  <line class="grid" x1="637" y1="310.0" x2="1005" y2="310.0" />
+  <text class="axis-label" x="630" y="315.0" text-anchor="end">195.6</text>
+  <line class="grid" x1="637" y1="227.5" x2="1005" y2="227.5" />
+  <text class="axis-label" x="630" y="232.5" text-anchor="end">208.6</text>
+  <line class="grid" x1="637" y1="145.0" x2="1005" y2="145.0" />
+  <text class="axis-label" x="630" y="150.0" text-anchor="end">221.6</text>
+  <text class="axis-label" x="645" y="340" text-anchor="middle">0</text>
+  <text class="axis-label" x="730" y="340" text-anchor="middle">2</text>
+  <text class="axis-label" x="815" y="340" text-anchor="middle">5</text>
+  <text class="axis-label" x="900" y="340" text-anchor="middle">10</text>
+  <text class="axis-label" x="985" y="340" text-anchor="middle">100</text>
+  <text class="axis-label" x="820" y="354" text-anchor="middle">InpSlippage (points)</text>
+  <polyline class="line series-1" points="645,199.1 730,199.1 815,199.1 900,199.1 985,199.1" />
+  <circle class="mark series-1" cx="645" cy="199.1" r="4.5" />
+  <circle class="mark series-1" cx="730" cy="199.1" r="4.5" />
+  <circle class="mark series-1" cx="815" cy="199.1" r="4.5" />
+  <circle class="mark series-1" cx="900" cy="199.1" r="4.5" />
+  <circle class="mark series-1" cx="985" cy="199.1" r="4.5" />
+  <polyline class="line series-2" points="645,255.9 730,255.9 815,255.9 900,255.9 985,255.9" />
+  <circle class="mark series-2" cx="645" cy="255.9" r="4.5" />
+  <circle class="mark series-2" cx="730" cy="255.9" r="4.5" />
+  <circle class="mark series-2" cx="815" cy="255.9" r="4.5" />
+  <circle class="mark series-2" cx="900" cy="255.9" r="4.5" />
+  <circle class="mark series-2" cx="985" cy="255.9" r="4.5" />
+  <text class="value-label" x="985" y="190.1" text-anchor="end">213.07</text>
+  <text class="value-label" x="985" y="273.9" text-anchor="end">204.12</text>
+  <rect class="panel" x="70" y="400" width="470" height="250" />
+  <text class="panel-title" x="88" y="428">WF3</text>
+  <text class="axis-label" x="522" y="428" text-anchor="end">期間: 2026-01-01 ～ 2026-03-31</text>
+  <line class="grid" x1="122" y1="605.0" x2="490" y2="605.0" />
+  <text class="axis-label" x="115" y="610.0" text-anchor="end">380.8</text>
+  <line class="grid" x1="122" y1="522.5" x2="490" y2="522.5" />
+  <text class="axis-label" x="115" y="527.5" text-anchor="end">404.1</text>
+  <line class="grid" x1="122" y1="440.0" x2="490" y2="440.0" />
+  <text class="axis-label" x="115" y="445.0" text-anchor="end">427.4</text>
+  <text class="axis-label" x="130" y="635" text-anchor="middle">0</text>
+  <text class="axis-label" x="215" y="635" text-anchor="middle">2</text>
+  <text class="axis-label" x="300" y="635" text-anchor="middle">5</text>
+  <text class="axis-label" x="385" y="635" text-anchor="middle">10</text>
+  <text class="axis-label" x="470" y="635" text-anchor="middle">100</text>
+  <text class="axis-label" x="305" y="649" text-anchor="middle">InpSlippage (points)</text>
+  <polyline class="line series-1" points="130,546.9 215,546.9 300,546.9 385,546.9 470,546.9" />
+  <circle class="mark series-1" cx="130" cy="546.9" r="4.5" />
+  <circle class="mark series-1" cx="215" cy="546.9" r="4.5" />
+  <circle class="mark series-1" cx="300" cy="546.9" r="4.5" />
+  <circle class="mark series-1" cx="385" cy="546.9" r="4.5" />
+  <circle class="mark series-1" cx="470" cy="546.9" r="4.5" />
+  <polyline class="line series-2" points="130,498.1 215,498.1 300,498.1 385,498.1 470,498.1" />
+  <circle class="mark series-2" cx="130" cy="498.1" r="4.5" />
+  <circle class="mark series-2" cx="215" cy="498.1" r="4.5" />
+  <circle class="mark series-2" cx="300" cy="498.1" r="4.5" />
+  <circle class="mark series-2" cx="385" cy="498.1" r="4.5" />
+  <circle class="mark series-2" cx="470" cy="498.1" r="4.5" />
+  <text class="value-label" x="470" y="564.9" text-anchor="end">397.19</text>
+  <text class="value-label" x="470" y="489.1" text-anchor="end">410.99</text>
+  <rect class="panel" x="585" y="400" width="470" height="250" />
+  <text class="panel-title" x="603" y="428">WF4</text>
+  <text class="axis-label" x="1037" y="428" text-anchor="end">期間: 2026-04-01 ～ 2026-06-30</text>
+  <line class="grid" x1="637" y1="605.0" x2="1005" y2="605.0" />
+  <text class="axis-label" x="630" y="610.0" text-anchor="end">170.7</text>
+  <line class="grid" x1="637" y1="522.5" x2="1005" y2="522.5" />
+  <text class="axis-label" x="630" y="527.5" text-anchor="end">308.7</text>
+  <line class="grid" x1="637" y1="440.0" x2="1005" y2="440.0" />
+  <text class="axis-label" x="630" y="445.0" text-anchor="end">446.6</text>
+  <text class="axis-label" x="645" y="635" text-anchor="middle">0</text>
+  <text class="axis-label" x="730" y="635" text-anchor="middle">2</text>
+  <text class="axis-label" x="815" y="635" text-anchor="middle">5</text>
+  <text class="axis-label" x="900" y="635" text-anchor="middle">10</text>
+  <text class="axis-label" x="985" y="635" text-anchor="middle">100</text>
+  <text class="axis-label" x="820" y="649" text-anchor="middle">InpSlippage (points)</text>
+  <polyline class="line series-1" points="645,490.8 730,490.8 815,490.8 900,490.8 985,490.8" />
+  <circle class="mark series-1" cx="645" cy="490.8" r="4.5" />
+  <circle class="mark series-1" cx="730" cy="490.8" r="4.5" />
+  <circle class="mark series-1" cx="815" cy="490.8" r="4.5" />
+  <circle class="mark series-1" cx="900" cy="490.8" r="4.5" />
+  <circle class="mark series-1" cx="985" cy="490.8" r="4.5" />
+  <polyline class="line series-2" points="645,554.2 730,554.2 815,554.2 900,554.2 985,554.2" />
+  <circle class="mark series-2" cx="645" cy="554.2" r="4.5" />
+  <circle class="mark series-2" cx="730" cy="554.2" r="4.5" />
+  <circle class="mark series-2" cx="815" cy="554.2" r="4.5" />
+  <circle class="mark series-2" cx="900" cy="554.2" r="4.5" />
+  <circle class="mark series-2" cx="985" cy="554.2" r="4.5" />
+  <text class="value-label" x="985" y="481.8" text-anchor="end">361.72</text>
+  <text class="value-label" x="985" y="572.2" text-anchor="end">255.62</text>
+</svg>

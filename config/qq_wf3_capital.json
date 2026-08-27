@@ -42,6 +42,10 @@
     "net_profit_tolerance_percent": 0.5,
     "trades": 165,
     "deal_count": 330,
-    "deal_sequence_sha256": "b254a64c37ab0ec829849c7f0557aefc504fdaaecc954644dfb7bc9ba68ec187"
+    "deal_sequence_sha256": "b254a64c37ab0ec829849c7f0557aefc504fdaaecc954644dfb7bc9ba68ec187",
+    "accounting_net_profit": 397.10,
+    "commission_total": -118.80,
+    "swap_total": 0.62,
+    "deal_profit_total": 515.28
   }
 }

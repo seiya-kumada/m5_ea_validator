@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="520" viewBox="0 0 1060 520" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">EA別 最大Equity DD</title>
+  <desc id="chart-desc">各stress水準で4WFのうち最大となったEquity Drawdown百分率をEA別に示す。</desc>
+  <style>
+    .chart-background { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 24px; font-weight: 500; }
+    .subtitle { font-size: 16px; fill: #374151; }
+    .panel-title { font-size: 18px; font-weight: 500; }
+    .axis-label { font-size: 15px; fill: #374151; }
+    .value-label { font-size: 14px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .legend-label { font-size: 15px; font-weight: 500; }
+    .axis { stroke: #4b5563; stroke-width: 1.4; }
+    .grid { stroke: #cbd0d7; stroke-width: 1; }
+    .panel { fill: none; stroke: #aeb5bf; stroke-width: 1.2; }
+    .line { fill: none; stroke-width: 3; }
+    .mark { stroke-width: 2.5; fill: #ffffff; }
+    .series-1 { stroke: #2463a9; }
+    .series-2 { stroke: #b25b22; }
+    .series-3 { stroke: #2d8062; }
+    .series-4 { stroke: #8156a8; }
+    @media (prefers-color-scheme: dark) {
+      .chart-background { fill: #17191d; }
+      text { fill: #f3f4f6; } .subtitle, .axis-label { fill: #d1d5db; }
+      .value-label { stroke: #17191d; }
+      .axis { stroke: #c5cad1; } .grid, .panel { stroke: #555c66; } .mark { fill: #17191d; }
+      .series-1 { stroke: #6da9e5; } .series-2 { stroke: #e59a66; }
+      .series-3 { stroke: #70c3a3; } .series-4 { stroke: #b99adb; }
+    }
+  </style>
+  <rect class="chart-background" x="0" y="0" width="1060" height="520" />
+  <text class="title" x="90" y="35">EA別 最大Equity DD（4WF中の最大値）</text>
+  <text class="subtitle" x="90" y="59">縦軸: %、横軸: 片道stress points</text>
+  <line class="grid" x1="90" y1="450.0" x2="990" y2="450.0" />
+  <text class="axis-label" x="78" y="454.0" text-anchor="end">0%</text>
+  <line class="grid" x1="90" y1="391.7" x2="990" y2="391.7" />
+  <text class="axis-label" x="78" y="395.7" text-anchor="end">3%</text>
+  <line class="grid" x1="90" y1="333.3" x2="990" y2="333.3" />
+  <text class="axis-label" x="78" y="337.3" text-anchor="end">6%</text>
+  <line class="grid" x1="90" y1="275.0" x2="990" y2="275.0" />
+  <text class="axis-label" x="78" y="279.0" text-anchor="end">9%</text>
+  <line class="grid" x1="90" y1="216.7" x2="990" y2="216.7" />
+  <text class="axis-label" x="78" y="220.7" text-anchor="end">12%</text>
+  <line class="grid" x1="90" y1="158.3" x2="990" y2="158.3" />
+  <text class="axis-label" x="78" y="162.3" text-anchor="end">15%</text>
+  <line class="grid" x1="90" y1="100.0" x2="990" y2="100.0" />
+  <text class="axis-label" x="78" y="104.0" text-anchor="end">18%</text>
+  <line class="axis" x1="90" y1="100" x2="90" y2="450" />
+  <line class="axis" x1="90" y1="450" x2="990" y2="450" />
+  <text class="axis-label" x="90.0" y="477" text-anchor="middle">S=0</text>
+  <text class="axis-label" x="390.0" y="477" text-anchor="middle">S=2</text>
+  <text class="axis-label" x="690.0" y="477" text-anchor="middle">S=5</text>
+  <text class="axis-label" x="990.0" y="477" text-anchor="middle">S=10</text>
+  <path class="line series-1" d="M 90.0 365.8 L 390.0 365.6 L 690.0 365.2 L 990.0 365.0" />
+  <circle class="mark series-1" cx="90.0" cy="365.8" r="5.5" />
+  <text class="value-label" x="90.0" y="355.8" text-anchor="middle">4.33</text>
+  <circle class="mark series-1" cx="390.0" cy="365.6" r="5.5" />
+  <text class="value-label" x="390.0" y="355.6" text-anchor="middle">4.34</text>
+  <circle class="mark series-1" cx="690.0" cy="365.2" r="5.5" />
+  <text class="value-label" x="690.0" y="355.2" text-anchor="middle">4.36</text>
+  <circle class="mark series-1" cx="990.0" cy="365.0" r="5.5" />
+  <text class="value-label" x="990.0" y="355.0" text-anchor="middle">4.37</text>
+  <path class="line series-2" d="M 90.0 271.9 L 390.0 271.3 L 690.0 271.3 L 990.0 245.8" />
+  <rect class="mark series-2" x="84.5" y="266.4" width="11" height="11" />
+  <text class="value-label" x="90.0" y="261.9" text-anchor="middle">9.16</text>
+  <rect class="mark series-2" x="384.5" y="265.8" width="11" height="11" />
+  <text class="value-label" x="390.0" y="261.3" text-anchor="middle">9.19</text>
+  <rect class="mark series-2" x="684.5" y="265.8" width="11" height="11" />
+  <text class="value-label" x="690.0" y="261.3" text-anchor="middle">9.19</text>
+  <rect class="mark series-2" x="984.5" y="240.3" width="11" height="11" />
+  <text class="value-label" x="990.0" y="235.8" text-anchor="middle">10.50</text>
+  <path class="line series-3" d="M 90.0 136.4 L 390.0 135.4 L 690.0 140.4 L 990.0 139.7" />
+  <polygon class="mark series-3" points="90.0,129.4 83.5,141.9 96.5,141.9" />
+  <text class="value-label" x="90.0" y="155.4" text-anchor="middle">16.13</text>
+  <polygon class="mark series-3" points="390.0,128.4 383.5,140.9 396.5,140.9" />
+  <text class="value-label" x="390.0" y="154.4" text-anchor="middle">16.18</text>
+  <polygon class="mark series-3" points="690.0,133.4 683.5,145.9 696.5,145.9" />
+  <text class="value-label" x="690.0" y="159.4" text-anchor="middle">15.92</text>
+  <polygon class="mark series-3" points="990.0,132.7 983.5,145.2 996.5,145.2" />
+  <text class="value-label" x="990.0" y="158.7" text-anchor="middle">15.96</text>
+  <line class="line series-1" x1="180" y1="82" x2="208" y2="82" />
+  <circle class="mark series-1" cx="194.0" cy="82.0" r="5.5" />
+  <text class="legend-label" x="218" y="86">QQ</text>
+  <line class="line series-2" x1="430" y1="82" x2="458" y2="82" />
+  <rect class="mark series-2" x="438.5" y="76.5" width="11" height="11" />
+  <text class="legend-label" x="468" y="86">Smart Gold Hunter</text>
+  <line class="line series-3" x1="735" y1="82" x2="763" y2="82" />
+  <polygon class="mark series-3" points="749.0,75.0 742.5,87.5 755.5,87.5" />
+  <text class="legend-label" x="773" y="86">Wave Rider</text>
+</svg>
