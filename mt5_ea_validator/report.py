@@ -48,6 +48,14 @@ class DealAudit:
         return asdict(self)
 
 
+@dataclass(frozen=True)
+class ReportInputs:
+    values: dict[str, str]
+
+    def to_dict(self) -> dict[str, str]:
+        return dict(self.values)
+
+
 class _TableCellParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
@@ -195,6 +203,41 @@ def parse_report(path: Path) -> ReportMetrics:
         sharpe_ratio=_parse_number(raw["sharpe_ratio"]),
         equity_drawdown_percent=_parse_percent(raw["equity_drawdown_percent"]),
     )
+
+
+def parse_report_inputs(path: Path) -> ReportInputs:
+    if not path.is_file():
+        raise ReportError(f"HTMLレポートがありません: {path}")
+    parser = _TableCellParser()
+    parser.feed(_decode_report(path.read_bytes()))
+    values: dict[str, str] = {}
+    in_inputs = False
+    for row in parser.rows:
+        if not row:
+            continue
+        label = _normalize_label(row[0])
+        if not in_inputs:
+            if label not in {"inputs", "パラメータ"}:
+                continue
+            in_inputs = True
+        elif row[0].strip():
+            break
+
+        candidates = [cell.strip() for cell in row[1:] if cell.strip()]
+        if not candidates:
+            continue
+        name, separator, value = candidates[-1].partition("=")
+        name = name.strip()
+        if not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name):
+            continue
+        if name in values:
+            raise ReportError(f"レポート入力が重複しています: {name}")
+        values[name] = value.strip()
+    if not in_inputs:
+        raise ReportError(f"HTMLレポートにInputs欄がありません: {path}")
+    if not values:
+        raise ReportError(f"HTMLレポートのInputs欄から入力値を取得できません: {path}")
+    return ReportInputs(values=values)
 
 
 def _decimal(value: str) -> Decimal:

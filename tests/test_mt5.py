@@ -70,6 +70,18 @@ class MT5ConfigurationTests(unittest.TestCase):
         self.assertIn("Deposit=3000", first)
         self.assertIn("Deposit=1500", second)
 
+    def test_ini_can_omit_expert_parameters_for_default_control(self) -> None:
+        text = render_tester_ini(
+            self.scenario,
+            deposit=3000,
+            report_path=Path("default.htm"),
+            include_expert_parameters=False,
+        )
+
+        self.assertNotIn("ExpertParameters=", text)
+        self.assertIn("Expert=Market\\Quantum Queen X MT5.ex5", text)
+        self.assertIn("Symbol=XAUUSD", text)
+
     def test_report_name_uses_configured_wf(self) -> None:
         scenario = load_scenario(
             PROJECT_ROOT / "config" / "qq_wf2_capital.json"

@@ -1,0 +1,50 @@
+{
+  "scenario_id": "ubs_gold_smoke",
+  "terminal_path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
+  "data_directory": "C:\\Users\\s-kum\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075",
+  "expert": "Market\\Ultimate Breakout System.ex5",
+  "expert_binary": "MQL5\\Experts\\Market\\Ultimate Breakout System.ex5",
+  "ea_version_label": "7.5 demo (MQL5 Market, downloaded 2026-09-02)",
+  "set_directory": "Sets_v6_faithful14\\Sets_v6_faithful14",
+  "output_root": "data\\ubs_strategy_comparison\\smoke",
+  "symbol": "XAUUSD",
+  "period": "H1",
+  "from_date": "2026.08.01",
+  "to_date": "2026.08.31",
+  "model": 4,
+  "execution_mode": 0,
+  "leverage": 500,
+  "currency": "USD",
+  "deposit": 3000,
+  "timeout_seconds": 1800,
+  "strategies": [
+    {
+      "strategy_id": "xau_sr_scalp_h1",
+      "file_name": "9637052_basa_xauusd h1 - sr - scalp - 2010-2020 - 9.set"
+    },
+    {
+      "strategy_id": "xau_h1_c5",
+      "file_name": "991005_SPD_UBS-XAUUSD-H1-C5.set"
+    },
+    {
+      "strategy_id": "daily_l",
+      "file_name": "dailyL.set"
+    },
+    {
+      "strategy_id": "e",
+      "file_name": "E.set"
+    },
+    {
+      "strategy_id": "goldtradepro_a",
+      "file_name": "GOLDTRADEPRO_a.set"
+    },
+    {
+      "strategy_id": "mt5_longterm_e",
+      "file_name": "MT5_longterm_E.set"
+    },
+    {
+      "strategy_id": "mt5_longterm_j",
+      "file_name": "MT5_longterm_J.set"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ from mt5_ea_validator.report import (
     check_benchmark,
     parse_deal_audit,
     parse_report,
+    parse_report_inputs,
 )
 
 
@@ -39,6 +40,43 @@ def matching_deal_audit(scenario) -> DealAudit:
 
 
 class ReportTests(unittest.TestCase):
+    def test_parses_report_inputs_and_ignores_display_headings(self) -> None:
+        html = """<html><body><table>
+        <tr><td>パラメータ:</td><td>ForceSymbol=XAUUSD</td></tr>
+        <tr><td></td><td>&gt;&gt;&gt; LOT SETTINGS=</td></tr>
+        <tr><td></td><td>Risk=999</td></tr>
+        <tr><td></td><td>URL=https://example.com/?a=b</td></tr>
+        <tr><td>会社:</td><td>TitanFX</td></tr>
+        <tr><td></td><td>MustNotBeParsed=1</td></tr>
+        </table></body></html>"""
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "report.htm"
+            path.write_text(html, encoding="utf-8")
+            inputs = parse_report_inputs(path)
+
+        self.assertEqual(
+            inputs.values,
+            {
+                "ForceSymbol": "XAUUSD",
+                "Risk": "999",
+                "URL": "https://example.com/?a=b",
+            },
+        )
+
+    def test_parses_english_inputs_label(self) -> None:
+        html = """<html><body><table>
+        <tr><td>Inputs:</td><td>UseAutoLoader=false</td></tr>
+        <tr><td></td><td>Run_Strategy=1</td></tr>
+        <tr><td>Company:</td><td>Broker</td></tr>
+        </table></body></html>"""
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "report.htm"
+            path.write_text(html, encoding="utf-16")
+            inputs = parse_report_inputs(path)
+
+        self.assertEqual(inputs.values["UseAutoLoader"], "false")
+        self.assertEqual(inputs.values["Run_Strategy"], "1")
+
     def test_parses_english_utf16_report(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "report.htm"

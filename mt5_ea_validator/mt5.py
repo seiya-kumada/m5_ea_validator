@@ -85,30 +85,36 @@ def render_tester_ini(
     *,
     deposit: int,
     report_path: Path,
+    include_expert_parameters: bool = True,
 ) -> str:
     values = [
         "[Tester]",
         f"Expert={scenario.expert}",
-        f"ExpertParameters={scenario.staged_set_name}",
-        f"Symbol={scenario.symbol}",
-        f"Period={scenario.period}",
-        f"Optimization={scenario.optimization}",
-        f"Model={scenario.model}",
-        f"FromDate={scenario.from_date}",
-        f"ToDate={scenario.to_date}",
-        f"ForwardMode={scenario.forward_mode}",
-        f"Deposit={deposit}",
-        f"Currency={scenario.currency}",
-        "ProfitInPips=0",
-        f"Leverage={scenario.leverage}",
-        f"ExecutionMode={scenario.execution_mode}",
-        "OptimizationCriterion=7",
-        "Visual=0",
-        f"Report={report_path}",
-        "ReplaceReport=0",
-        "ShutdownTerminal=1",
-        "",
     ]
+    if include_expert_parameters:
+        values.append(f"ExpertParameters={scenario.staged_set_name}")
+    values.extend(
+        [
+            f"Symbol={scenario.symbol}",
+            f"Period={scenario.period}",
+            f"Optimization={scenario.optimization}",
+            f"Model={scenario.model}",
+            f"FromDate={scenario.from_date}",
+            f"ToDate={scenario.to_date}",
+            f"ForwardMode={scenario.forward_mode}",
+            f"Deposit={deposit}",
+            f"Currency={scenario.currency}",
+            "ProfitInPips=0",
+            f"Leverage={scenario.leverage}",
+            f"ExecutionMode={scenario.execution_mode}",
+            "OptimizationCriterion=7",
+            "Visual=0",
+            f"Report={report_path}",
+            "ReplaceReport=0",
+            "ShutdownTerminal=1",
+            "",
+        ]
+    )
     return "\n".join(values)
 
 
@@ -118,18 +124,23 @@ class MT5Executor:
         scenario: Scenario,
         *,
         process_runner: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+        stage_set: bool = True,
+        include_expert_parameters: bool = True,
     ) -> None:
         self.scenario = scenario
         self._process_runner = process_runner
+        self._stage_set = stage_set
+        self._include_expert_parameters = include_expert_parameters
 
     def prepare(self) -> None:
         validate_environment(self.scenario, require_stopped=True)
-        stage_dedicated_set(
-            self.scenario.set_source,
-            self.scenario.staged_set_path,
-            self.scenario.required_set_values,
-            label=f"{self.scenario.ea_id}/{self.scenario.wf}",
-        )
+        if self._stage_set:
+            stage_dedicated_set(
+                self.scenario.set_source,
+                self.scenario.staged_set_path,
+                self.scenario.required_set_values,
+                label=f"{self.scenario.ea_id}/{self.scenario.wf}",
+            )
 
     def execute(self, deposit: int, output_directory: Path) -> TestExecution:
         output_directory.mkdir(parents=True, exist_ok=False)
@@ -158,6 +169,7 @@ class MT5Executor:
                 self.scenario,
                 deposit=deposit,
                 report_path=report_setting,
+                include_expert_parameters=self._include_expert_parameters,
             ),
         )
 

@@ -1,6 +1,7 @@
 # Raw backtest outputs and other local data are ignored. Final reports and
 # related images may be force-added only when explicitly approved.
 /data/
+/Sets_v6_faithful4/
 /Sets_v6_faithful14/
 
 # Python environments and generated caches.
