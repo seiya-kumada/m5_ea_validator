@@ -27,6 +27,7 @@ from mt5_ea_validator.transaction_cost import (
     load_build_index,
     run_cost_stress_suite,
 )
+from mt5_ea_validator.ubs_inventory import UBSInventoryError, create_ubs_inventory
 
 
 DEFAULT_CONFIG = Path("config/qq_wf1_capital.json")
@@ -107,12 +108,37 @@ def _parser() -> argparse.ArgumentParser:
         type=Path,
         help="中断済みの第2層実行フォルダから未完了ケースだけ再開します",
     )
+
+    ubs_inventory = subparsers.add_parser(
+        "ubs-inventory",
+        help="UBSの指定銘柄setとEAバイナリの再現用目録を保存します",
+    )
+    ubs_inventory.add_argument("--set-directory", type=Path, required=True)
+    ubs_inventory.add_argument("--ea-path", type=Path, required=True)
+    ubs_inventory.add_argument("--ea-version-label", required=True)
+    ubs_inventory.add_argument("--symbol", default="XAUUSD")
+    ubs_inventory.add_argument(
+        "--output-root",
+        type=Path,
+        default=Path("data/ubs_strategy_comparison/inventory"),
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        if args.command == "ubs-inventory":
+            run_directory = create_ubs_inventory(
+                args.set_directory,
+                args.ea_path,
+                args.output_root,
+                ea_version_label=args.ea_version_label,
+                symbol=args.symbol,
+            )
+            print(f"UBS inventory completed: {run_directory}")
+            return 0
+
         if args.command == "run-slippage-suite":
             scenarios = tuple(load_scenario(path) for path in args.config)
             for scenario in scenarios:
@@ -190,6 +216,7 @@ def main(argv: list[str] | None = None) -> int:
         MT5Error,
         TransactionCostError,
         SlippageToleranceError,
+        UBSInventoryError,
         OSError,
         ValueError,
     ) as exc:
