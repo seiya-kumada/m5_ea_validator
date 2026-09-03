@@ -49,6 +49,20 @@ class DealAudit:
 
 
 @dataclass(frozen=True)
+class EntryVolumeAudit:
+    entry_deal_count: int
+    first_entry_volume: float
+    minimum_entry_volume: float
+    maximum_entry_volume: float
+    mean_entry_volume: float
+    total_entry_volume: float
+    entry_volume_sequence_sha256: str
+
+    def to_dict(self) -> dict[str, float | int | str]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
 class ReportInputs:
     values: dict[str, str]
 
@@ -285,6 +299,52 @@ def parse_deal_audit(path: Path) -> DealAudit:
         commission_total=float(commission),
         swap_total=float(swap),
         deal_profit_total=float(profit),
+    )
+
+
+def parse_entry_volume_audit(path: Path) -> EntryVolumeAudit:
+    """Summarize filled entry-deal volumes from an MT5 HTML report."""
+    if not path.is_file():
+        raise ReportError(f"HTMLレポートがありません: {path}")
+    parser = _TableCellParser()
+    parser.feed(_decode_report(path.read_bytes()))
+    entries: list[tuple[str, str, Decimal]] = []
+    for row in parser.rows:
+        if (
+            len(row) < 13
+            or not re.fullmatch(r"\d{4}\.\d{2}\.\d{2} \d{2}:\d{2}:\d{2}", row[0])
+            or row[3].casefold() not in {"buy", "sell"}
+            or row[4].casefold() not in {"in", "in/out"}
+        ):
+            continue
+        volume = _decimal(row[5])
+        if volume <= 0:
+            raise ReportError(f"新規建てdealのvolumeが正ではありません: {row}")
+        entries.append((row[0], row[3].casefold(), volume))
+    if not entries:
+        return EntryVolumeAudit(
+            entry_deal_count=0,
+            first_entry_volume=0.0,
+            minimum_entry_volume=0.0,
+            maximum_entry_volume=0.0,
+            mean_entry_volume=0.0,
+            total_entry_volume=0.0,
+            entry_volume_sequence_sha256=deal_identity_sha256([]),
+        )
+    volumes = [item[2] for item in entries]
+    canonical = [
+        f"{timestamp}|{direction}|{format(volume, 'f')}"
+        for timestamp, direction, volume in entries
+    ]
+    total = sum(volumes, Decimal("0"))
+    return EntryVolumeAudit(
+        entry_deal_count=len(entries),
+        first_entry_volume=float(entries[0][2]),
+        minimum_entry_volume=float(min(volumes)),
+        maximum_entry_volume=float(max(volumes)),
+        mean_entry_volume=float(total / len(volumes)),
+        total_entry_volume=float(total),
+        entry_volume_sequence_sha256=deal_identity_sha256(canonical),
     )
 
 

@@ -8,8 +8,10 @@ from pathlib import Path
 from mt5_ea_validator.configuration import load_scenario
 from mt5_ea_validator.report import (
     DealAudit,
+    EntryVolumeAudit,
     check_benchmark,
     parse_deal_audit,
+    parse_entry_volume_audit,
     parse_report,
     parse_report_inputs,
 )
@@ -184,6 +186,32 @@ class ReportTests(unittest.TestCase):
         self.assertAlmostEqual(audit.commission_total, -0.72)
         self.assertAlmostEqual(audit.swap_total, -0.05)
         self.assertAlmostEqual(audit.deal_profit_total, 1.10)
+
+    def test_parses_entry_volume_summary_without_counting_exits(self) -> None:
+        rows = """
+        <tr><td>2025.07.01 01:02:03</td><td>1</td><td>XAUUSD</td>
+        <td>buy</td><td>in</td><td>0.02</td><td>3300.10</td><td>1</td>
+        <td>-0.72</td><td>0.00</td><td>0.00</td><td>2999.28</td><td>entry</td></tr>
+        <tr><td>2025.07.01 02:03:04</td><td>2</td><td>XAUUSD</td>
+        <td>sell</td><td>out</td><td>0.02</td><td>3301.20</td><td>2</td>
+        <td>0.00</td><td>-0.05</td><td>2.20</td><td>3001.43</td><td>exit</td></tr>
+        <tr><td>2025.07.02 03:04:05</td><td>3</td><td>XAUUSD</td>
+        <td>sell</td><td>in</td><td>0.04</td><td>3290.00</td><td>3</td>
+        <td>-1.44</td><td>0.00</td><td>0.00</td><td>2999.99</td><td>entry</td></tr>
+        """
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "report.htm"
+            path.write_text(f"<html><table>{rows}</table></html>", encoding="utf-8")
+            audit = parse_entry_volume_audit(path)
+
+        self.assertIsInstance(audit, EntryVolumeAudit)
+        self.assertEqual(audit.entry_deal_count, 2)
+        self.assertEqual(audit.first_entry_volume, 0.02)
+        self.assertEqual(audit.minimum_entry_volume, 0.02)
+        self.assertEqual(audit.maximum_entry_volume, 0.04)
+        self.assertAlmostEqual(audit.mean_entry_volume, 0.03)
+        self.assertAlmostEqual(audit.total_entry_volume, 0.06)
+        self.assertEqual(len(audit.entry_volume_sequence_sha256), 64)
 
 
 if __name__ == "__main__":

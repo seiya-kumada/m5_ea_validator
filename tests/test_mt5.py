@@ -10,6 +10,7 @@ from unittest.mock import patch
 from mt5_ea_validator.configuration import load_scenario
 from mt5_ea_validator.mt5 import (
     MT5Executor,
+    logical_cpu_mask,
     render_tester_ini,
     running_terminal_paths,
     target_terminal_is_running,
@@ -24,6 +25,11 @@ class MT5ConfigurationTests(unittest.TestCase):
         self.scenario = load_scenario(
             PROJECT_ROOT / "config" / "qq_wf1_capital.json"
         )
+
+    def test_logical_cpu_mask_uses_at_most_requested_cpus(self) -> None:
+        self.assertEqual(logical_cpu_mask(12, 2), 0x3)
+        self.assertEqual(logical_cpu_mask(1, 2), 0x1)
+        self.assertEqual(logical_cpu_mask(None, 2), 0x1)
 
     def test_ini_has_all_fixed_conditions(self) -> None:
         report = Path("MQL5") / "Files" / "test" / "report.htm"

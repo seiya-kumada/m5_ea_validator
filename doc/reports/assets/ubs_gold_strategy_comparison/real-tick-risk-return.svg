@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="715" viewBox="0 0 1200 715" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">実ティックのNet ProfitとEquity Drawdown</title>
+  <desc id="chart-desc">7戦略の実ティックNet Profitを縦軸、Equity Drawdownを横軸に示す散布図。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="715" />
+  <text class="title" x="55" y="42">実ティック：Net ProfitとEquity DD</text>
+  <text class="subtitle" x="55" y="72">右ほどDDが大きく、上ほど利益が大きい（原setのリスク量は未統一）</text>
+  <line class="grid" x1="120.0" y1="105.0" x2="120.0" y2="605.0" />
+  <text class="axis-label" x="120.0" y="635.0" text-anchor="middle">0%</text>
+  <line class="grid" x1="281.7" y1="105.0" x2="281.7" y2="605.0" />
+  <text class="axis-label" x="281.7" y="635.0" text-anchor="middle">2%</text>
+  <line class="grid" x1="443.3" y1="105.0" x2="443.3" y2="605.0" />
+  <text class="axis-label" x="443.3" y="635.0" text-anchor="middle">4%</text>
+  <line class="grid" x1="605.0" y1="105.0" x2="605.0" y2="605.0" />
+  <text class="axis-label" x="605.0" y="635.0" text-anchor="middle">6%</text>
+  <line class="grid" x1="766.7" y1="105.0" x2="766.7" y2="605.0" />
+  <text class="axis-label" x="766.7" y="635.0" text-anchor="middle">8%</text>
+  <line class="grid" x1="928.3" y1="105.0" x2="928.3" y2="605.0" />
+  <text class="axis-label" x="928.3" y="635.0" text-anchor="middle">10%</text>
+  <line class="grid" x1="1090.0" y1="105.0" x2="1090.0" y2="605.0" />
+  <text class="axis-label" x="1090.0" y="635.0" text-anchor="middle">12%</text>
+  <line class="grid" x1="120.0" y1="605.0" x2="1090.0" y2="605.0" />
+  <text class="axis-label" x="105.0" y="611.0" text-anchor="end">0</text>
+  <line class="grid" x1="120.0" y1="480.0" x2="1090.0" y2="480.0" />
+  <text class="axis-label" x="105.0" y="486.0" text-anchor="end">200</text>
+  <line class="grid" x1="120.0" y1="355.0" x2="1090.0" y2="355.0" />
+  <text class="axis-label" x="105.0" y="361.0" text-anchor="end">400</text>
+  <line class="grid" x1="120.0" y1="230.0" x2="1090.0" y2="230.0" />
+  <text class="axis-label" x="105.0" y="236.0" text-anchor="end">600</text>
+  <line class="grid" x1="120.0" y1="105.0" x2="1090.0" y2="105.0" />
+  <text class="axis-label" x="105.0" y="111.0" text-anchor="end">800</text>
+  <circle class="point" cx="537.9" cy="245.4" r="8" />
+  <text class="value" x="551.9" y="233.4" text-anchor="start">xau_sr_scalp_h1  575</text>
+  <circle class="point" cx="271.2" cy="323.5" r="8" />
+  <text class="value" x="285.2" y="309.5" text-anchor="start">xau_h1_c5  450</text>
+  <circle class="point" cx="318.0" cy="394.2" r="8" />
+  <text class="value" x="332.0" y="419.2" text-anchor="start">daily_l  337</text>
+  <circle class="point" cx="729.5" cy="265.6" r="8" />
+  <text class="value" x="743.5" y="253.6" text-anchor="start">e  543</text>
+  <circle class="point" cx="997.8" cy="150.8" r="8" />
+  <text class="value" x="983.8" y="136.8" text-anchor="end">goldtradepro_a  727</text>
+  <circle class="point" cx="430.4" cy="377.4" r="8" />
+  <text class="value" x="444.4" y="402.4" text-anchor="start">mt5_longterm_e  364</text>
+  <circle class="point" cx="282.5" cy="420.3" r="8" />
+  <text class="value" x="268.5" y="445.3" text-anchor="end">mt5_longterm_j  296</text>
+  <line class="axis" x1="120.0" y1="605.0" x2="1090.0" y2="605.0" />
+  <line class="axis" x1="120.0" y1="105.0" x2="120.0" y2="605.0" />
+  <text class="axis-label" x="605" y="680" text-anchor="middle">Equity Drawdown (%)</text>
+  <text class="axis-label" x="25" y="355" transform="rotate(-90 25 355)" text-anchor="middle">Net Profit (USD)</text>
+</svg>

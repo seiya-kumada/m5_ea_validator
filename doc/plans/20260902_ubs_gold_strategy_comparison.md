@@ -81,8 +81,8 @@ Phase 1.5成果物:
 - [x] ゲートがFAILした場合は後続比較を開始しない。
 - [ ] 原setを変更せず、実運用口座に合わせた通貨・入金・レバレッジ・Commission・Swap条件で比較する。
 - [ ] 長期期間は`1 minute OHLC`で実行し、年別・月別・全期間の指標を保存する。
-- [ ] 直近1年は`Every tick based on real ticks`でも実行する。
-- [ ] 直近1年の`1 minute OHLC`と実ティック結果を比較し、モデル差を保存する。
+- [x] 直近1年は`Every tick based on real ticks`でも実行する。
+- [x] 直近1年の`1 minute OHLC`と実ティック結果を比較し、モデル差を保存する。
 - [x] 直近1年の2方式比較を14ケースとして実行・再開できるランナーと比較集計を実装する。
 - [x] 既存のWF1～WF4相当期間を7 setすべてで実行する（7×4＝28件）。
 
@@ -105,20 +105,26 @@ Phase 1.5成果物:
 
 各set固有の最適化・フォワード期間を証明する資料が残っていないため、すべての歴史検証を厳密なOut-of-Sample成績ではなく「過去データでの再検証」として扱う。
 
-直近1年モデリング方式比較run（2026-09-02時点でユーザー指定により中断）:
+直近1年モデリング方式比較run（2026-09-03完了）:
 `data/ubs_strategy_comparison/model_comparison_1y/20260902T162029093739_4e2ec09f/`
 
-- 12/14ケース完了
+- 14/14ケース成功
 - `1 minute OHLC`: 7/7完了
-- `Every tick based on real ticks`: 5/7完了
-- 残り: `mt5_longterm_e`、`mt5_longterm_j`
-- 再開実行は`BelowNormal`、12論理CPU中2個のaffinityで負荷を制限する。
+- `Every tick based on real ticks`: 7/7完了、全件ティック品質ゲートPASS
+- 再開実行は`BelowNormal`、12論理CPU中2個のaffinityで負荷を制限した。
+- 実ティックのNet ProfitはOHLC比で5戦略が減少、2戦略が増加した。
+- Tradesは6戦略で同数、`xau_h1_c5`だけ実ティックで1件増加した。
+- deal系列SHA-256は7戦略すべてで異なり、モデリング方式が約定系列へ影響した。
 
 ### Phase 3: 同一リスク比較
 
+- [x] 主要基準を約1年実ティックの最大Equity DD 5.0%（許容4.5%～5.5%）に決定する。
 - [ ] 原setを保存し、資金管理項目だけを変更した派生setを別名で作る。
 - [ ] UBSの資金管理パラメータの意味を資料または実測で確認してから正規化方式を決定する。
 - [ ] 全戦略を同一の事前リスク基準で再実行し、原set順位との差を比較する。
+
+基準と安全条件の決定記録:
+`doc/decisions/20260903_ubs_same_risk_criterion.md`
 
 ### Phase 4: 実行・コスト耐性
 
@@ -138,6 +144,11 @@ Phase 1.5成果物:
 - [ ] 目的、結論、詳細の順で作成する。
 - [ ] Net Profit、PF、RF、Sharpe、Equity DD、取引数、最大連敗、停滞期間、期間安定性、ストレス劣化率を表とグラフで示す。
 - [ ] 使用したEA/setの識別情報、全テスト条件、制約、再現手順、保存先を明記する。
+
+Phase 0～2時点の暫定総合報告書:
+`doc/reports/ubs_gold_strategy_comparison.md`
+
+未実施のPhase 3～5を結果へ混在させず、保存済み42ケースだけで作成した。Phase 6の完了扱いにはせず、後続検証後に最終版へ更新する。
 
 ## 実装方針
 

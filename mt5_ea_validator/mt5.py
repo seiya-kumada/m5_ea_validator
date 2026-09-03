@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import ctypes
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -13,6 +15,65 @@ from mt5_ea_validator.setfile import stage_dedicated_set, write_mt5_unicode
 
 class MT5Error(RuntimeError):
     """Raised when MT5 cannot be executed safely or successfully."""
+
+
+def logical_cpu_mask(available_cpus: int | None, requested_cpus: int = 2) -> int:
+    available = max(1, int(available_cpus or 1))
+    requested = max(1, min(int(requested_cpus), available))
+    return (1 << requested) - 1
+
+
+def _set_windows_process_affinity(process_id: int, mask: int) -> None:
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    open_process = kernel32.OpenProcess
+    open_process.argtypes = [ctypes.c_uint32, ctypes.c_int, ctypes.c_uint32]
+    open_process.restype = ctypes.c_void_p
+    set_affinity = kernel32.SetProcessAffinityMask
+    set_affinity.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
+    set_affinity.restype = ctypes.c_int
+    close_handle = kernel32.CloseHandle
+    close_handle.argtypes = [ctypes.c_void_p]
+    close_handle.restype = ctypes.c_int
+    handle = open_process(0x0200 | 0x1000, 0, process_id)
+    if not handle:
+        raise OSError(ctypes.get_last_error(), "OpenProcess failed")
+    try:
+        if not set_affinity(handle, mask):
+            raise OSError(ctypes.get_last_error(), "SetProcessAffinityMask failed")
+    finally:
+        close_handle(handle)
+
+
+def run_below_normal_two_cpus(
+    command: list[str],
+    *,
+    cwd: Path,
+    check: bool,
+    timeout: int,
+) -> subprocess.CompletedProcess[str]:
+    """Run MT5 below normal priority and restrict it to two logical CPUs on Windows."""
+    creationflags = 0
+    if os.name == "nt":
+        creationflags = int(getattr(subprocess, "BELOW_NORMAL_PRIORITY_CLASS"))
+    process = subprocess.Popen(command, cwd=cwd, creationflags=creationflags)
+    try:
+        if os.name == "nt":
+            _set_windows_process_affinity(
+                process.pid, logical_cpu_mask(os.cpu_count(), 2)
+            )
+        return_code = process.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.wait()
+        raise
+    except Exception:
+        process.kill()
+        process.wait()
+        raise
+    completed = subprocess.CompletedProcess(command, return_code)
+    if check and return_code:
+        raise subprocess.CalledProcessError(return_code, command)
+    return completed
 
 
 @dataclass(frozen=True)

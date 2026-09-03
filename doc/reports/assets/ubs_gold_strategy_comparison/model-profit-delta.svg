@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">実ティックによるNet Profit変化</title>
+  <desc id="chart-desc">実ティックのNet ProfitからOHLCのNet Profitを引いた差。左向きは減少、右向きは増加を示す。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="690" />
+  <text class="title" x="55" y="42">実ティックによるNet Profit変化</text>
+  <text class="subtitle" x="55" y="72">差額 = 実ティックのNet Profit − 1 minute OHLCのNet Profit（単位：USD）</text>
+  <line class="axis" x1="660.0" y1="95" x2="660.0" y2="625" />
+  <text class="axis-label" x="660.0" y="656" text-anchor="middle">0</text>
+  <text class="label" x="55" y="136">xau_sr_scalp_h1</text>
+  <rect class="negative" x="185.0" y="112" width="475.0" height="34" rx="3" />
+  <text class="value" x="197.0" y="136" text-anchor="start">-595.12</text>
+  <text class="label" x="55" y="206">xau_h1_c5</text>
+  <rect class="positive" x="660.0" y="182" width="27.3" height="34" rx="3" />
+  <text class="value" x="697.3" y="206" text-anchor="start">+34.15</text>
+  <text class="label" x="55" y="276">daily_l</text>
+  <rect class="negative" x="598.7" y="252" width="61.3" height="34" rx="3" />
+  <text class="value" x="588.7" y="276" text-anchor="end">-76.74</text>
+  <text class="label" x="55" y="346">e</text>
+  <rect class="negative" x="466.2" y="322" width="193.8" height="34" rx="3" />
+  <text class="value" x="456.2" y="346" text-anchor="end">-242.80</text>
+  <text class="label" x="55" y="416">goldtradepro_a</text>
+  <rect class="negative" x="631.0" y="392" width="29.0" height="34" rx="3" />
+  <text class="value" x="621.0" y="416" text-anchor="end">-36.36</text>
+  <text class="label" x="55" y="486">mt5_longterm_e</text>
+  <rect class="negative" x="612.1" y="462" width="47.9" height="34" rx="3" />
+  <text class="value" x="602.1" y="486" text-anchor="end">-59.98</text>
+  <text class="label" x="55" y="556">mt5_longterm_j</text>
+  <rect class="positive" x="660.0" y="532" width="3.9" height="34" rx="3" />
+  <text class="value" x="673.9" y="556" text-anchor="start">+4.91</text>
+</svg>

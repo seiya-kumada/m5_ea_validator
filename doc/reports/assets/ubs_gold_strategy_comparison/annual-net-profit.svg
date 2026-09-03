@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">約1年Net ProfitのOHLCと実ティック比較</title>
+  <desc id="chart-desc">7戦略について、1 minute OHLCとEvery tick based on real ticksのNet Profitを横棒で比較する。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="750" />
+  <text class="title" x="55" y="42">約1年 Net Profit：OHLCと実ティック</text>
+  <text class="subtitle" x="55" y="72">同一戦略・同一期間・Deposit 3,000 USD（単位：USD）</text>
+  <rect class="ohlc" x="805" y="42" width="24" height="16" />
+  <text class="axis-label" x="838" y="57">1 minute OHLC</text>
+  <rect class="real" x="1010" y="42" width="24" height="16" />
+  <text class="axis-label" x="1043" y="57">実ティック</text>
+  <line class="grid" x1="285.0" y1="95" x2="285.0" y2="665" />
+  <text class="axis-label" x="285.0" y="692" text-anchor="middle">0</text>
+  <line class="grid" x1="490.0" y1="95" x2="490.0" y2="665" />
+  <text class="axis-label" x="490.0" y="692" text-anchor="middle">300</text>
+  <line class="grid" x1="695.0" y1="95" x2="695.0" y2="665" />
+  <text class="axis-label" x="695.0" y="692" text-anchor="middle">600</text>
+  <line class="grid" x1="900.0" y1="95" x2="900.0" y2="665" />
+  <text class="axis-label" x="900.0" y="692" text-anchor="middle">900</text>
+  <line class="grid" x1="1105.0" y1="95" x2="1105.0" y2="665" />
+  <text class="axis-label" x="1105.0" y="692" text-anchor="middle">1,200</text>
+  <text class="label" x="55" y="141">xau_sr_scalp_h1</text>
+  <rect class="ohlc" x="285.0" y="112" width="820.0" height="25" rx="3" />
+  <text class="value" x="1114.0" y="131">1,170.45</text>
+  <rect class="real" x="285.0" y="143" width="403.1" height="25" rx="3" />
+  <text class="value" x="697.1" y="162">575.33</text>
+  <text class="label" x="55" y="219">xau_h1_c5</text>
+  <rect class="ohlc" x="285.0" y="190" width="291.6" height="25" rx="3" />
+  <text class="value" x="585.6" y="209">416.25</text>
+  <rect class="real" x="285.0" y="221" width="315.5" height="25" rx="3" />
+  <text class="value" x="609.5" y="240">450.40</text>
+  <text class="label" x="55" y="297">daily_l</text>
+  <rect class="ohlc" x="285.0" y="268" width="290.1" height="25" rx="3" />
+  <text class="value" x="584.1" y="287">414.07</text>
+  <rect class="real" x="285.0" y="299" width="236.3" height="25" rx="3" />
+  <text class="value" x="530.3" y="318">337.33</text>
+  <text class="label" x="55" y="375">e</text>
+  <rect class="ohlc" x="285.0" y="346" width="550.5" height="25" rx="3" />
+  <text class="value" x="844.5" y="365">785.78</text>
+  <rect class="real" x="285.0" y="377" width="380.4" height="25" rx="3" />
+  <text class="value" x="674.4" y="396">542.98</text>
+  <text class="label" x="55" y="453">goldtradepro_a</text>
+  <rect class="ohlc" x="285.0" y="424" width="534.6" height="25" rx="3" />
+  <text class="value" x="828.6" y="443">763.07</text>
+  <rect class="real" x="285.0" y="455" width="509.1" height="25" rx="3" />
+  <text class="value" x="803.1" y="474">726.71</text>
+  <text class="label" x="55" y="531">mt5_longterm_e</text>
+  <rect class="ohlc" x="285.0" y="502" width="297.1" height="25" rx="3" />
+  <text class="value" x="591.1" y="521">424.09</text>
+  <rect class="real" x="285.0" y="533" width="255.1" height="25" rx="3" />
+  <text class="value" x="549.1" y="552">364.11</text>
+  <text class="label" x="55" y="609">mt5_longterm_j</text>
+  <rect class="ohlc" x="285.0" y="580" width="203.6" height="25" rx="3" />
+  <text class="value" x="497.6" y="599">290.65</text>
+  <rect class="real" x="285.0" y="611" width="207.1" height="25" rx="3" />
+  <text class="value" x="501.1" y="630">295.56</text>
+  <text class="axis-label" x="695" y="725" text-anchor="middle">Net Profit (USD)</text>
+</svg>

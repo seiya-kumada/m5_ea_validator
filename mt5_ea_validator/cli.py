@@ -43,6 +43,13 @@ from mt5_ea_validator.ubs_quarterly import (
     UBSQuarterlyError,
     run_ubs_quarterly_suite,
 )
+from mt5_ea_validator.ubs_report import UBSReportError, build_ubs_current_report
+from mt5_ea_validator.ubs_risk_sensitivity import (
+    UBSRiskSensitivityCampaignError,
+    UBSRiskSensitivityError,
+    audit_saved_ubs_entry_volumes,
+    run_ubs_risk_sensitivity_pilot,
+)
 from mt5_ea_validator.ubs_smoke import (
     UBSSmokeCampaignError,
     UBSSmokeError,
@@ -252,12 +259,70 @@ def _parser() -> argparse.ArgumentParser:
         "--faithful-validation-run", type=Path, required=True
     )
     ubs_model_comparison.add_argument("--resume-run", type=Path)
+
+    ubs_report = subparsers.add_parser(
+        "build-ubs-current-report",
+        help="保存済みUBS比較結果から暫定総合報告書とグラフを生成します",
+    )
+    ubs_report.add_argument("--quarterly-run", type=Path, required=True)
+    ubs_report.add_argument("--model-run", type=Path, required=True)
+    ubs_report.add_argument(
+        "--output",
+        type=Path,
+        default=Path("doc/reports/ubs_gold_strategy_comparison.md"),
+    )
+
+    ubs_volume_audit = subparsers.add_parser(
+        "audit-ubs-entry-volumes",
+        help="保存済みUBS実ティック結果から新規建て約定ロットを集計します",
+    )
+    ubs_volume_audit.add_argument("--model-run", type=Path, required=True)
+    ubs_volume_audit.add_argument("--output", type=Path, required=True)
+
+    ubs_risk_pilot = subparsers.add_parser(
+        "run-ubs-risk-pilot",
+        help="UBS資金管理入力の短期実ティック感応度パイロットを実行します",
+    )
+    ubs_risk_pilot.add_argument(
+        "--config", type=Path, default=Path("config/ubs_gold_smoke.json")
+    )
+    ubs_risk_pilot.add_argument(
+        "--faithful-manifest", type=Path, required=True
+    )
+    ubs_risk_pilot.add_argument(
+        "--faithful-validation-run", type=Path, required=True
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        if args.command == "run-ubs-risk-pilot":
+            settings = load_ubs_smoke_settings(args.config)
+            output = run_ubs_risk_sensitivity_pilot(
+                settings,
+                args.faithful_manifest,
+                args.faithful_validation_run,
+                progress=print,
+            )
+            print(f"UBS risk-sensitivity pilot completed: {output}")
+            return 0
+
+        if args.command == "audit-ubs-entry-volumes":
+            output = audit_saved_ubs_entry_volumes(args.model_run, args.output)
+            print(f"UBS entry-volume audit completed: {output}")
+            return 0
+
+        if args.command == "build-ubs-current-report":
+            report_path = build_ubs_current_report(
+                args.quarterly_run,
+                args.model_run,
+                args.output,
+            )
+            print(f"UBS current-results report completed: {report_path}")
+            return 0
+
         if args.command == "run-ubs-model-comparison":
             settings = load_ubs_smoke_settings(args.config)
             run_directory = run_ubs_model_comparison_suite(
@@ -436,6 +501,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ERROR: {exc}", file=sys.stderr)
         print(f"Artifacts: {exc.run_directory}", file=sys.stderr)
         return 1
+    except UBSRiskSensitivityCampaignError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        print(f"Artifacts: {exc.run_directory}", file=sys.stderr)
+        return 1
     except TickHistoryGateError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         print(f"Artifacts: {exc.summary_path}", file=sys.stderr)
@@ -451,6 +520,8 @@ def main(argv: list[str] | None = None) -> int:
         TickHistoryError,
         UBSQuarterlyError,
         UBSModelComparisonError,
+        UBSReportError,
+        UBSRiskSensitivityError,
         OSError,
         ValueError,
     ) as exc:
