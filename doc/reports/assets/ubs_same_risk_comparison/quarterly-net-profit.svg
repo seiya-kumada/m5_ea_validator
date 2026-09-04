@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="685" viewBox="0 0 1200 685" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">固定ロットの四半期別Net Profit</title>
+  <desc id="chart-desc">7戦略のWF1からWF4までのNet Profit。28件中27件が黒字で、mt5_longterm_eのWF4だけがマイナス0.02 USD。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .below-target { fill: #64748b; }
+    .target-band { fill: #d1fae5; opacity: 0.75; }
+    .target-line { stroke: #047857; stroke-width: 3; }
+    .warning-line { stroke: #b91c1c; stroke-width: 3; stroke-dasharray: 10 7; }
+    .warning-cell { fill: #fecaca; }
+    .negative-cell { fill: #fecaca; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .below-target { fill: #94a3b8; }
+      .target-band { fill: #14532d; opacity: 0.7; }
+      .target-line { stroke: #34d399; }
+      .warning-line { stroke: #f87171; }
+      .warning-cell, .negative-cell { fill: #7f1d1d; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="685" />
+  <text class="title" x="55" y="42">固定ロット：四半期別Net Profit</text>
+  <text class="subtitle" x="55" y="72">各WFをDeposit 3,000 USDから独立開始（単位：USD）</text>
+  <text class="label" x="410.0" y="108" text-anchor="middle">WF1</text>
+  <text class="axis-label" x="410.0" y="132" text-anchor="middle">2025-07-01～2025-09-30</text>
+  <text class="label" x="600.0" y="108" text-anchor="middle">WF2</text>
+  <text class="axis-label" x="600.0" y="132" text-anchor="middle">2025-10-01～2025-12-31</text>
+  <text class="label" x="790.0" y="108" text-anchor="middle">WF3</text>
+  <text class="axis-label" x="790.0" y="132" text-anchor="middle">2026-01-01～2026-03-31</text>
+  <text class="label" x="980.0" y="108" text-anchor="middle">WF4</text>
+  <text class="axis-label" x="980.0" y="132" text-anchor="middle">2026-04-01～2026-06-30</text>
+  <text class="label" x="55" y="188">xau_sr_scalp_h1</text>
+  <rect class="heat-1" x="319" y="152" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="189" text-anchor="middle">+6.90</text>
+  <rect class="heat-2" x="509" y="152" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="189" text-anchor="middle">+203.97</text>
+  <rect class="heat-1" x="699" y="152" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="189" text-anchor="middle">+103.74</text>
+  <rect class="heat-1" x="889" y="152" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="189" text-anchor="middle">+115.86</text>
+  <text class="label" x="55" y="254">xau_h1_c5</text>
+  <rect class="heat-1" x="319" y="218" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="255" text-anchor="middle">+5.53</text>
+  <rect class="heat-3" x="509" y="218" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="255" text-anchor="middle">+385.19</text>
+  <rect class="heat-4" x="699" y="218" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="255" text-anchor="middle">+662.28</text>
+  <rect class="heat-2" x="889" y="218" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="255" text-anchor="middle">+246.75</text>
+  <text class="label" x="55" y="320">daily_l</text>
+  <rect class="heat-1" x="319" y="284" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="321" text-anchor="middle">+116.40</text>
+  <rect class="heat-2" x="509" y="284" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="321" text-anchor="middle">+256.87</text>
+  <rect class="heat-1" x="699" y="284" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="321" text-anchor="middle">+110.64</text>
+  <rect class="heat-2" x="889" y="284" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="321" text-anchor="middle">+169.08</text>
+  <text class="label" x="55" y="386">e</text>
+  <rect class="heat-1" x="319" y="350" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="387" text-anchor="middle">+79.17</text>
+  <rect class="heat-1" x="509" y="350" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="387" text-anchor="middle">+82.73</text>
+  <rect class="heat-2" x="699" y="350" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="387" text-anchor="middle">+171.06</text>
+  <rect class="heat-1" x="889" y="350" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="387" text-anchor="middle">+87.48</text>
+  <text class="label" x="55" y="452">goldtradepro_a</text>
+  <rect class="heat-2" x="319" y="416" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="453" text-anchor="middle">+138.83</text>
+  <rect class="heat-2" x="509" y="416" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="453" text-anchor="middle">+140.61</text>
+  <rect class="heat-3" x="699" y="416" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="453" text-anchor="middle">+416.17</text>
+  <rect class="heat-1" x="889" y="416" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="453" text-anchor="middle">+30.87</text>
+  <text class="label" x="55" y="518">mt5_longterm_e</text>
+  <rect class="heat-1" x="319" y="482" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="519" text-anchor="middle">+77.62</text>
+  <rect class="heat-1" x="509" y="482" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="519" text-anchor="middle">+50.07</text>
+  <rect class="heat-2" x="699" y="482" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="519" text-anchor="middle">+221.47</text>
+  <rect class="negative-cell" x="889" y="482" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="519" text-anchor="middle">-0.02</text>
+  <text class="label" x="55" y="584">mt5_longterm_j</text>
+  <rect class="heat-2" x="319" y="548" width="182" height="58" rx="4" />
+  <text class="heat-value" x="410.0" y="585" text-anchor="middle">+188.95</text>
+  <rect class="heat-1" x="509" y="548" width="182" height="58" rx="4" />
+  <text class="heat-value" x="600.0" y="585" text-anchor="middle">+3.10</text>
+  <rect class="heat-2" x="699" y="548" width="182" height="58" rx="4" />
+  <text class="heat-value" x="790.0" y="585" text-anchor="middle">+188.14</text>
+  <rect class="heat-2" x="889" y="548" width="182" height="58" rx="4" />
+  <text class="heat-value" x="980.0" y="585" text-anchor="middle">+181.72</text>
+  <text class="axis-label" x="695" y="650" text-anchor="middle">青が濃いほど利益が大きい／赤は赤字</text>
+</svg>

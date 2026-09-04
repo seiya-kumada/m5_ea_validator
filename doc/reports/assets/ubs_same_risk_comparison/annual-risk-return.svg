@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="715" viewBox="0 0 1200 715" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">固定ロット後の約1年リスク・リターン</title>
+  <desc id="chart-desc">固定ロットで実行した7戦略のNet ProfitとEquity Drawdown。緑の縦帯は4.5から5.5パーセントの目標帯。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .below-target { fill: #64748b; }
+    .target-band { fill: #d1fae5; opacity: 0.75; }
+    .target-line { stroke: #047857; stroke-width: 3; }
+    .warning-line { stroke: #b91c1c; stroke-width: 3; stroke-dasharray: 10 7; }
+    .warning-cell { fill: #fecaca; }
+    .negative-cell { fill: #fecaca; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .below-target { fill: #94a3b8; }
+      .target-band { fill: #14532d; opacity: 0.7; }
+      .target-line { stroke: #34d399; }
+      .warning-line { stroke: #f87171; }
+      .warning-cell, .negative-cell { fill: #7f1d1d; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="715" />
+  <text class="title" x="55" y="42">固定ロット後の約1年リスク・リターン</text>
+  <text class="subtitle" x="55" y="72">右ほどEquity DDが大きく、上ほどNet Profitが大きい</text>
+  <rect class="target-band" x="483.8" y="105.0" width="80.8" height="500.0" />
+  <line class="grid" x1="120.0" y1="105.0" x2="120.0" y2="605.0" />
+  <text class="axis-label" x="120.0" y="635.0" text-anchor="middle">0%</text>
+  <line class="grid" x1="281.7" y1="105.0" x2="281.7" y2="605.0" />
+  <text class="axis-label" x="281.7" y="635.0" text-anchor="middle">2%</text>
+  <line class="grid" x1="443.3" y1="105.0" x2="443.3" y2="605.0" />
+  <text class="axis-label" x="443.3" y="635.0" text-anchor="middle">4%</text>
+  <line class="grid" x1="605.0" y1="105.0" x2="605.0" y2="605.0" />
+  <text class="axis-label" x="605.0" y="635.0" text-anchor="middle">6%</text>
+  <line class="grid" x1="766.7" y1="105.0" x2="766.7" y2="605.0" />
+  <text class="axis-label" x="766.7" y="635.0" text-anchor="middle">8%</text>
+  <line class="grid" x1="928.3" y1="105.0" x2="928.3" y2="605.0" />
+  <text class="axis-label" x="928.3" y="635.0" text-anchor="middle">10%</text>
+  <line class="grid" x1="1090.0" y1="105.0" x2="1090.0" y2="605.0" />
+  <text class="axis-label" x="1090.0" y="635.0" text-anchor="middle">12%</text>
+  <line class="grid" x1="120.0" y1="605.0" x2="1090.0" y2="605.0" />
+  <text class="axis-label" x="105.0" y="611.0" text-anchor="end">0</text>
+  <line class="grid" x1="120.0" y1="533.6" x2="1090.0" y2="533.6" />
+  <text class="axis-label" x="105.0" y="539.6" text-anchor="end">200</text>
+  <line class="grid" x1="120.0" y1="462.1" x2="1090.0" y2="462.1" />
+  <text class="axis-label" x="105.0" y="468.1" text-anchor="end">400</text>
+  <line class="grid" x1="120.0" y1="390.7" x2="1090.0" y2="390.7" />
+  <text class="axis-label" x="105.0" y="396.7" text-anchor="end">600</text>
+  <line class="grid" x1="120.0" y1="319.3" x2="1090.0" y2="319.3" />
+  <text class="axis-label" x="105.0" y="325.3" text-anchor="end">800</text>
+  <line class="grid" x1="120.0" y1="247.9" x2="1090.0" y2="247.9" />
+  <text class="axis-label" x="105.0" y="253.9" text-anchor="end">1,000</text>
+  <line class="grid" x1="120.0" y1="176.4" x2="1090.0" y2="176.4" />
+  <text class="axis-label" x="105.0" y="182.4" text-anchor="end">1,200</text>
+  <line class="grid" x1="120.0" y1="105.0" x2="1090.0" y2="105.0" />
+  <text class="axis-label" x="105.0" y="111.0" text-anchor="end">1,400</text>
+  <circle class="point" cx="516.1" cy="440.2" r="8" />
+  <text class="value" x="530.1" y="470.2" text-anchor="start">xau_sr_scalp_h1  461</text>
+  <circle class="point" cx="547.6" cy="122.3" r="8" />
+  <text class="value" x="561.6" y="108.3" text-anchor="start">xau_h1_c5  1,352</text>
+  <circle class="point" cx="504.0" cy="363.9" r="8" />
+  <text class="value" x="518.0" y="349.9" text-anchor="start">daily_l  675</text>
+  <circle class="point" cx="514.5" cy="448.6" r="8" />
+  <text class="value" x="500.5" y="433.6" text-anchor="end">e  438</text>
+  <circle class="point" cx="997.8" cy="345.1" r="8" />
+  <text class="value" x="983.8" y="331.1" text-anchor="end">goldtradepro_a  728</text>
+  <circle class="point" cx="430.4" cy="475.0" r="8" />
+  <text class="value" x="416.4" y="503.0" text-anchor="end">mt5_longterm_e  364</text>
+  <circle class="point" cx="434.4" cy="393.9" r="8" />
+  <text class="value" x="420.4" y="379.9" text-anchor="end">mt5_longterm_j  591</text>
+  <line class="axis" x1="120.0" y1="605.0" x2="1090.0" y2="605.0" />
+  <line class="axis" x1="120.0" y1="105.0" x2="120.0" y2="605.0" />
+  <text class="axis-label" x="605" y="680" text-anchor="middle">Equity Drawdown (%)</text>
+  <text class="axis-label" x="25" y="355" transform="rotate(-90 25 355)" text-anchor="middle">Net Profit (USD)</text>
+</svg>

@@ -28,6 +28,7 @@ class MT5ConfigurationTests(unittest.TestCase):
 
     def test_logical_cpu_mask_uses_at_most_requested_cpus(self) -> None:
         self.assertEqual(logical_cpu_mask(12, 2), 0x3)
+        self.assertEqual(logical_cpu_mask(12, 4), 0xF)
         self.assertEqual(logical_cpu_mask(1, 2), 0x1)
         self.assertEqual(logical_cpu_mask(None, 2), 0x1)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import hashlib
 import ctypes
+import hashlib
 import os
 import shutil
 import subprocess
@@ -44,14 +44,15 @@ def _set_windows_process_affinity(process_id: int, mask: int) -> None:
         close_handle(handle)
 
 
-def run_below_normal_two_cpus(
+def _run_below_normal_with_cpu_limit(
     command: list[str],
     *,
     cwd: Path,
     check: bool,
     timeout: int,
+    requested_cpus: int,
 ) -> subprocess.CompletedProcess[str]:
-    """Run MT5 below normal priority and restrict it to two logical CPUs on Windows."""
+    """Run MT5 below normal priority with a bounded logical-CPU affinity."""
     creationflags = 0
     if os.name == "nt":
         creationflags = int(getattr(subprocess, "BELOW_NORMAL_PRIORITY_CLASS"))
@@ -59,7 +60,7 @@ def run_below_normal_two_cpus(
     try:
         if os.name == "nt":
             _set_windows_process_affinity(
-                process.pid, logical_cpu_mask(os.cpu_count(), 2)
+                process.pid, logical_cpu_mask(os.cpu_count(), requested_cpus)
             )
         return_code = process.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
@@ -74,6 +75,40 @@ def run_below_normal_two_cpus(
     if check and return_code:
         raise subprocess.CalledProcessError(return_code, command)
     return completed
+
+
+def run_below_normal_two_cpus(
+    command: list[str],
+    *,
+    cwd: Path,
+    check: bool,
+    timeout: int,
+) -> subprocess.CompletedProcess[str]:
+    """Run MT5 below normal priority and restrict it to two logical CPUs."""
+    return _run_below_normal_with_cpu_limit(
+        command,
+        cwd=cwd,
+        check=check,
+        timeout=timeout,
+        requested_cpus=2,
+    )
+
+
+def run_below_normal_four_cpus(
+    command: list[str],
+    *,
+    cwd: Path,
+    check: bool,
+    timeout: int,
+) -> subprocess.CompletedProcess[str]:
+    """Run long MT5 tests below normal priority on at most four logical CPUs."""
+    return _run_below_normal_with_cpu_limit(
+        command,
+        cwd=cwd,
+        check=check,
+        timeout=timeout,
+        requested_cpus=4,
+    )
 
 
 @dataclass(frozen=True)

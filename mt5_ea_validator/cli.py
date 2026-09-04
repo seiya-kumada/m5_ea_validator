@@ -43,12 +43,22 @@ from mt5_ea_validator.ubs_quarterly import (
     UBSQuarterlyError,
     run_ubs_quarterly_suite,
 )
-from mt5_ea_validator.ubs_report import UBSReportError, build_ubs_current_report
+from mt5_ea_validator.ubs_report import (
+    UBSReportError,
+    build_ubs_current_report,
+    build_ubs_same_risk_report,
+)
 from mt5_ea_validator.ubs_risk_sensitivity import (
     UBSRiskSensitivityCampaignError,
     UBSRiskSensitivityError,
     audit_saved_ubs_entry_volumes,
+    build_ubs_same_risk_final_selection,
+    run_ubs_risk_mode_pilot,
+    run_ubs_risk_selector_pilot,
     run_ubs_risk_sensitivity_pilot,
+    run_ubs_same_risk_annual_adjustments,
+    run_ubs_same_risk_annual_candidates,
+    run_ubs_same_risk_quarterly_suite,
 )
 from mt5_ea_validator.ubs_smoke import (
     UBSSmokeCampaignError,
@@ -272,6 +282,25 @@ def _parser() -> argparse.ArgumentParser:
         default=Path("doc/reports/ubs_gold_strategy_comparison.md"),
     )
 
+    ubs_same_risk_report = subparsers.add_parser(
+        "build-ubs-same-risk-report",
+        help="保存済みUBS同一リスク結果から総合報告書とグラフを生成します",
+    )
+    ubs_same_risk_report.add_argument(
+        "--selection", type=Path, required=True
+    )
+    ubs_same_risk_report.add_argument(
+        "--quarterly-run", type=Path, required=True
+    )
+    ubs_same_risk_report.add_argument(
+        "--original-model-run", type=Path, required=True
+    )
+    ubs_same_risk_report.add_argument(
+        "--output",
+        type=Path,
+        default=Path("doc/reports/ubs_same_risk_comparison.md"),
+    )
+
     ubs_volume_audit = subparsers.add_parser(
         "audit-ubs-entry-volumes",
         help="保存済みUBS実ティック結果から新規建て約定ロットを集計します",
@@ -292,12 +321,176 @@ def _parser() -> argparse.ArgumentParser:
     ubs_risk_pilot.add_argument(
         "--faithful-validation-run", type=Path, required=True
     )
+
+    ubs_risk_mode_pilot = subparsers.add_parser(
+        "run-ubs-risk-mode-pilot",
+        help="UBSの固定ロット経路と戦略別リスク上限を短期実ティックで確認します",
+    )
+    ubs_risk_mode_pilot.add_argument(
+        "--config", type=Path, default=Path("config/ubs_gold_smoke.json")
+    )
+    ubs_risk_mode_pilot.add_argument(
+        "--faithful-manifest", type=Path, required=True
+    )
+    ubs_risk_mode_pilot.add_argument(
+        "--faithful-validation-run", type=Path, required=True
+    )
+
+    ubs_risk_selector_pilot = subparsers.add_parser(
+        "run-ubs-risk-selector-pilot",
+        help="UBSのRisk=0とStartLotsの関係を安全なMaxLots付きで確認します",
+    )
+    ubs_risk_selector_pilot.add_argument(
+        "--config", type=Path, default=Path("config/ubs_gold_smoke.json")
+    )
+    ubs_risk_selector_pilot.add_argument(
+        "--faithful-manifest", type=Path, required=True
+    )
+    ubs_risk_selector_pilot.add_argument(
+        "--faithful-validation-run", type=Path, required=True
+    )
+
+    ubs_same_risk_annual = subparsers.add_parser(
+        "run-ubs-same-risk-annual",
+        help="UBS同一リスク化の初回固定ロット候補を約1年実ティックで検証します",
+    )
+    ubs_same_risk_annual.add_argument(
+        "--config", type=Path, default=Path("config/ubs_gold_smoke.json")
+    )
+    ubs_same_risk_annual.add_argument(
+        "--faithful-manifest", type=Path, required=True
+    )
+    ubs_same_risk_annual.add_argument(
+        "--faithful-validation-run", type=Path, required=True
+    )
+    ubs_same_risk_annual.add_argument("--model-run", type=Path, required=True)
+    ubs_same_risk_annual.add_argument("--resume-run", type=Path)
+
+    ubs_same_risk_adjustments = subparsers.add_parser(
+        "run-ubs-same-risk-adjustments",
+        help="UBS同一リスク化の隣接ロット候補を約1年実ティックで検証します",
+    )
+    ubs_same_risk_adjustments.add_argument(
+        "--config", type=Path, default=Path("config/ubs_gold_smoke.json")
+    )
+    ubs_same_risk_adjustments.add_argument(
+        "--faithful-manifest", type=Path, required=True
+    )
+    ubs_same_risk_adjustments.add_argument(
+        "--faithful-validation-run", type=Path, required=True
+    )
+    ubs_same_risk_adjustments.add_argument("--model-run", type=Path, required=True)
+    ubs_same_risk_adjustments.add_argument(
+        "--initial-candidate-run", type=Path, required=True
+    )
+    ubs_same_risk_adjustments.add_argument("--resume-run", type=Path)
+
+    ubs_same_risk_selection = subparsers.add_parser(
+        "build-ubs-same-risk-selection",
+        help="初回・追加の年間候補から安全側の最終固定ロットを選びます",
+    )
+    ubs_same_risk_selection.add_argument(
+        "--initial-candidate-run", type=Path, required=True
+    )
+    ubs_same_risk_selection.add_argument(
+        "--adjustment-run", type=Path, required=True
+    )
+    ubs_same_risk_selection.add_argument("--output-directory", type=Path)
+
+    ubs_same_risk_quarterly = subparsers.add_parser(
+        "run-ubs-same-risk-quarterly",
+        help="UBSの最終固定ロットをWF1～WF4の実ティックで安全確認します",
+    )
+    ubs_same_risk_quarterly.add_argument(
+        "--config", type=Path, default=Path("config/ubs_gold_smoke.json")
+    )
+    ubs_same_risk_quarterly.add_argument(
+        "--selection", type=Path, required=True
+    )
+    ubs_same_risk_quarterly.add_argument(
+        "--faithful-manifest", type=Path, required=True
+    )
+    ubs_same_risk_quarterly.add_argument(
+        "--faithful-validation-run", type=Path, required=True
+    )
+    ubs_same_risk_quarterly.add_argument("--resume-run", type=Path)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        if args.command == "run-ubs-same-risk-quarterly":
+            settings = load_ubs_smoke_settings(args.config)
+            output = run_ubs_same_risk_quarterly_suite(
+                settings,
+                args.selection,
+                args.faithful_manifest,
+                args.faithful_validation_run,
+                resume_directory=args.resume_run,
+                progress=print,
+            )
+            print(f"UBS same-risk quarterly suite completed: {output}")
+            return 0
+
+        if args.command == "build-ubs-same-risk-selection":
+            output = build_ubs_same_risk_final_selection(
+                args.initial_candidate_run,
+                args.adjustment_run,
+                output_directory=args.output_directory,
+            )
+            print(f"UBS same-risk final selection completed: {output}")
+            return 0
+
+        if args.command == "run-ubs-same-risk-adjustments":
+            settings = load_ubs_smoke_settings(args.config)
+            output = run_ubs_same_risk_annual_adjustments(
+                settings,
+                args.faithful_manifest,
+                args.faithful_validation_run,
+                args.model_run,
+                args.initial_candidate_run,
+                resume_directory=args.resume_run,
+                progress=print,
+            )
+            print(f"UBS same-risk annual adjustments completed: {output}")
+            return 0
+
+        if args.command == "run-ubs-same-risk-annual":
+            settings = load_ubs_smoke_settings(args.config)
+            output = run_ubs_same_risk_annual_candidates(
+                settings,
+                args.faithful_manifest,
+                args.faithful_validation_run,
+                args.model_run,
+                resume_directory=args.resume_run,
+                progress=print,
+            )
+            print(f"UBS same-risk annual candidates completed: {output}")
+            return 0
+
+        if args.command == "run-ubs-risk-selector-pilot":
+            settings = load_ubs_smoke_settings(args.config)
+            output = run_ubs_risk_selector_pilot(
+                settings,
+                args.faithful_manifest,
+                args.faithful_validation_run,
+                progress=print,
+            )
+            print(f"UBS risk-selector pilot completed: {output}")
+            return 0
+
+        if args.command == "run-ubs-risk-mode-pilot":
+            settings = load_ubs_smoke_settings(args.config)
+            output = run_ubs_risk_mode_pilot(
+                settings,
+                args.faithful_manifest,
+                args.faithful_validation_run,
+                progress=print,
+            )
+            print(f"UBS risk-mode pilot completed: {output}")
+            return 0
+
         if args.command == "run-ubs-risk-pilot":
             settings = load_ubs_smoke_settings(args.config)
             output = run_ubs_risk_sensitivity_pilot(
@@ -321,6 +514,16 @@ def main(argv: list[str] | None = None) -> int:
                 args.output,
             )
             print(f"UBS current-results report completed: {report_path}")
+            return 0
+
+        if args.command == "build-ubs-same-risk-report":
+            report_path = build_ubs_same_risk_report(
+                args.selection,
+                args.quarterly_run,
+                args.original_model_run,
+                args.output,
+            )
+            print(f"UBS same-risk report completed: {report_path}")
             return 0
 
         if args.command == "run-ubs-model-comparison":

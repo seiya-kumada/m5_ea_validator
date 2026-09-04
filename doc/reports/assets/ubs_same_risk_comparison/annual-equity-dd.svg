@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="705" viewBox="0 0 1200 705" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">約1年Equity DDの同一リスク調整結果</title>
+  <desc id="chart-desc">7戦略の固定ロットによる約1年Equity Drawdown。4戦略が目標帯、2戦略がロット刻みにより下側、goldtradepro_aは最低ロットでも上限超過。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .below-target { fill: #64748b; }
+    .target-band { fill: #d1fae5; opacity: 0.75; }
+    .target-line { stroke: #047857; stroke-width: 3; }
+    .warning-line { stroke: #b91c1c; stroke-width: 3; stroke-dasharray: 10 7; }
+    .warning-cell { fill: #fecaca; }
+    .negative-cell { fill: #fecaca; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .below-target { fill: #94a3b8; }
+      .target-band { fill: #14532d; opacity: 0.7; }
+      .target-line { stroke: #34d399; }
+      .warning-line { stroke: #f87171; }
+      .warning-cell, .negative-cell { fill: #7f1d1d; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="705" />
+  <text class="title" x="55" y="42">約1年 Equity DD：5%目標への調整結果</text>
+  <text class="subtitle" x="55" y="72">目標帯 4.5～5.5%／固定ロット・実ティック（単位：%）</text>
+  <rect class="target-band" x="548.6" y="96" width="58.6" height="480" />
+  <line class="target-line" x1="577.9" y1="96" x2="577.9" y2="576" />
+  <line class="grid" x1="285.0" y1="96" x2="285.0" y2="576" />
+  <text class="axis-label" x="285.0" y="610" text-anchor="middle">0%</text>
+  <line class="grid" x1="402.1" y1="96" x2="402.1" y2="576" />
+  <text class="axis-label" x="402.1" y="610" text-anchor="middle">2%</text>
+  <line class="grid" x1="519.3" y1="96" x2="519.3" y2="576" />
+  <text class="axis-label" x="519.3" y="610" text-anchor="middle">4%</text>
+  <line class="grid" x1="636.4" y1="96" x2="636.4" y2="576" />
+  <text class="axis-label" x="636.4" y="610" text-anchor="middle">6%</text>
+  <line class="grid" x1="753.6" y1="96" x2="753.6" y2="576" />
+  <text class="axis-label" x="753.6" y="610" text-anchor="middle">8%</text>
+  <line class="grid" x1="870.7" y1="96" x2="870.7" y2="576" />
+  <text class="axis-label" x="870.7" y="610" text-anchor="middle">10%</text>
+  <line class="grid" x1="987.9" y1="96" x2="987.9" y2="576" />
+  <text class="axis-label" x="987.9" y="610" text-anchor="middle">12%</text>
+  <line class="grid" x1="1105.0" y1="96" x2="1105.0" y2="576" />
+  <text class="axis-label" x="1105.0" y="610" text-anchor="middle">14%</text>
+  <text class="label" x="55" y="137">xau_sr_scalp_h1</text>
+  <rect class="real" x="285.0" y="113" width="287.0" height="32" rx="3" />
+  <text class="value" x="582.0" y="136">4.90%  (0.03 lot)</text>
+  <text class="label" x="55" y="202">xau_h1_c5</text>
+  <rect class="real" x="285.0" y="178" width="309.8" height="32" rx="3" />
+  <text class="value" x="604.8" y="201">5.29%  (0.03 lot)</text>
+  <text class="label" x="55" y="267">daily_l</text>
+  <rect class="real" x="285.0" y="243" width="278.2" height="32" rx="3" />
+  <text class="value" x="573.2" y="266">4.75%  (0.04 lot)</text>
+  <text class="label" x="55" y="332">e</text>
+  <rect class="real" x="285.0" y="308" width="285.8" height="32" rx="3" />
+  <text class="value" x="580.8" y="331">4.88%  (0.03 lot)</text>
+  <text class="label" x="55" y="397">goldtradepro_a</text>
+  <rect class="negative" x="285.0" y="373" width="636.1" height="32" rx="3" />
+  <text class="value" x="931.1" y="396">10.86%  (0.01 lot)</text>
+  <text class="label" x="55" y="462">mt5_longterm_e</text>
+  <rect class="below-target" x="285.0" y="438" width="224.9" height="32" rx="3" />
+  <text class="value" x="519.9" y="461">3.84%  (0.01 lot)</text>
+  <text class="label" x="55" y="527">mt5_longterm_j</text>
+  <rect class="below-target" x="285.0" y="503" width="227.8" height="32" rx="3" />
+  <text class="value" x="522.8" y="526">3.89%  (0.02 lot)</text>
+  <text class="axis-label" x="577.9" y="640" text-anchor="middle">中央線：目標5.0%</text>
+  <text class="axis-label" x="695" y="672" text-anchor="middle">緑＝目標帯内、灰＝ロット刻みにより下側、赤＝最低ロットでも上限超過</text>
+</svg>
