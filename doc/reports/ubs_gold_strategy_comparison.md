@@ -9,8 +9,7 @@
 - 報告書の位置づけ: Phase 0～2完了時点の暫定評価
 
 ## 1. 目的
-
-本報告書の目的は、Ultimate Breakout System（UBS）のXAUUSD用set 7個について、原setの戦略設定を維持した状態で、収益性、四半期安定性、実ティック感応度、リスク効率を比較することである。
+<span style="color:yellow;">本報告書の目的は、Ultimate Breakout System（UBS）のXAUUSD用set 7個について、原setの戦略設定を維持した状態で、収益性、四半期安定性、実ティック感応度、リスク効率を比較することである。</span>
 
 単純なNet Profit順位だけでなく、`1 minute OHLC`から`Every tick based on real ticks`へ変更したときに成績や取引系列がどの程度変化するかを確認し、次段階の同一リスク比較で重点的に検証すべき戦略を特定する。
 
@@ -20,9 +19,9 @@
 
 ### 2.1 総合結論
 
-- 7戦略すべてが4四半期すべてで黒字だった。
-- 約1年の連続テストでも、7戦略すべてがOHLC・実ティックの両方で黒字を維持した。
-- 実ティックではOHLC比で5戦略の利益が減少し、2戦略の利益が増加した。
+- <span style="color:yellow;">7戦略すべてが4四半期すべてで黒字だった。</span>
+- <span style="color:yellow;">約1年の連続テストでも、7戦略すべてがOHLC・実ティックの両方で黒字を維持した。</span>
+- 実ティックではOHLC比で5戦略の利益が減少し、2戦略の利益が増加した。<span style="color:yellow;">大まかに言うと、1min OHLCの方がノイズが少なく、UBSには有利である。</span>
 - 最大のモデル差は`xau_sr_scalp_h1`の-595.12 USD（-50.85%）だった。
 - Tradesは6戦略で同数だったが、deal系列SHA-256は7戦略すべてで異なった。取引数が同じでも、日時・方向・約定価格の少なくとも一部が変化している。
 - `xau_h1_c5`と`mt5_longterm_j`は実ティックでNet Profitが増加し、モデル差が比較的小さい。

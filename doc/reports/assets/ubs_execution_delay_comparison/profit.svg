@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1000" viewBox="0 0 1200 1000" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">四半期 Net Profit：遅延条件の比較</title>
+  <desc id="chart-desc">2戦略×4WF、ランダム3回の実測範囲を表示。正確な値は本文の表を参照。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .below-target { fill: #64748b; }
+    .target-band { fill: #d1fae5; opacity: 0.75; }
+    .target-line { stroke: #047857; stroke-width: 3; }
+    .warning-line { stroke: #b91c1c; stroke-width: 3; stroke-dasharray: 10 7; }
+    .warning-cell { fill: #fecaca; }
+    .negative-cell { fill: #fecaca; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .below-target { fill: #94a3b8; }
+      .target-band { fill: #14532d; opacity: 0.7; }
+      .target-line { stroke: #34d399; }
+      .warning-line { stroke: #f87171; }
+      .warning-cell, .negative-cell { fill: #7f1d1d; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="1000" />
+<text class="title" x="50" y="42">四半期 Net Profit：遅延条件の比較</text>
+<text class="subtitle" x="50" y="78">青：遅延なし　緑：188ms　灰：ランダム平均（線：3回の最小～最大）</text>
+<text class="subtitle" x="50" y="109">各WFは独立テスト／単位：USD</text>
+<line class="grid" x1="320.0" y1="140" x2="320.0" y2="940"/>
+<text class="axis-label" x="320.0" y="972" text-anchor="middle">-38.7</text>
+<line class="grid" x1="476.0" y1="140" x2="476.0" y2="940"/>
+<text class="axis-label" x="476.0" y="972" text-anchor="middle">139.4</text>
+<line class="grid" x1="632.0" y1="140" x2="632.0" y2="940"/>
+<text class="axis-label" x="632.0" y="972" text-anchor="middle">317.4</text>
+<line class="grid" x1="788.0" y1="140" x2="788.0" y2="940"/>
+<text class="axis-label" x="788.0" y="972" text-anchor="middle">495.5</text>
+<line class="grid" x1="944.0" y1="140" x2="944.0" y2="940"/>
+<text class="axis-label" x="944.0" y="972" text-anchor="middle">673.5</text>
+<line class="grid" x1="1100.0" y1="140" x2="1100.0" y2="940"/>
+<text class="axis-label" x="1100.0" y="972" text-anchor="middle">851.6</text>
+<line class="axis" x1="353.9" y1="140" x2="353.9" y2="940"/>
+<text class="label" x="35" y="186">xau_h1_c5 / WF1</text>
+<rect class="ohlc" x="353.9" y="164" width="4.8" height="15"/>
+<rect class="real" x="353.9" y="188" width="4.8" height="15"/>
+<rect class="below-target" x="353.9" y="212" width="4.9" height="15"/>
+<path class="axis" fill="none" d="M 358.8,219 H 358.9 M 358.8,214 V 224 M 358.9,214 V 224"/>
+<text class="label" x="35" y="282">xau_h1_c5 / WF2</text>
+<rect class="ohlc" x="353.9" y="260" width="337.5" height="15"/>
+<rect class="real" x="353.9" y="284" width="337.5" height="15"/>
+<rect class="below-target" x="353.9" y="308" width="337.5" height="15"/>
+<path class="axis" fill="none" d="M 691.4,315 H 691.4 M 691.4,310 V 320 M 691.4,310 V 320"/>
+<text class="label" x="35" y="378">xau_h1_c5 / WF3</text>
+<rect class="ohlc" x="353.9" y="356" width="580.2" height="15"/>
+<rect class="real" x="353.9" y="380" width="580.2" height="15"/>
+<rect class="below-target" x="353.9" y="404" width="662.4" height="15"/>
+<path class="axis" fill="none" d="M 984.8,411 H 1032.2 M 984.8,406 V 416 M 1032.2,406 V 416"/>
+<text class="label" x="35" y="474">xau_h1_c5 / WF4</text>
+<rect class="ohlc" x="353.9" y="452" width="216.2" height="15"/>
+<rect class="real" x="353.9" y="476" width="216.2" height="15"/>
+<rect class="below-target" x="353.9" y="500" width="216.4" height="15"/>
+<path class="axis" fill="none" d="M 570.1,507 H 570.4 M 570.1,502 V 512 M 570.4,502 V 512"/>
+<text class="label" x="35" y="570">daily_l / WF1</text>
+<rect class="ohlc" x="353.9" y="548" width="102.0" height="15"/>
+<rect class="real" x="353.9" y="572" width="101.1" height="15"/>
+<rect class="below-target" x="353.9" y="596" width="98.6" height="15"/>
+<path class="axis" fill="none" d="M 451.5,603 H 453.2 M 451.5,598 V 608 M 453.2,598 V 608"/>
+<text class="label" x="35" y="666">daily_l / WF2</text>
+<rect class="ohlc" x="353.9" y="644" width="225.0" height="15"/>
+<rect class="real" x="353.9" y="668" width="224.8" height="15"/>
+<rect class="below-target" x="353.9" y="692" width="213.7" height="15"/>
+<path class="axis" fill="none" d="M 566.0,699 H 568.4 M 566.0,694 V 704 M 568.4,694 V 704"/>
+<text class="label" x="35" y="762">daily_l / WF3</text>
+<rect class="ohlc" x="353.9" y="740" width="96.9" height="15"/>
+<rect class="real" x="353.9" y="764" width="96.9" height="15"/>
+<rect class="below-target" x="353.9" y="788" width="100.0" height="15"/>
+<path class="axis" fill="none" d="M 445.3,795 H 458.7 M 445.3,790 V 800 M 458.7,790 V 800"/>
+<text class="label" x="35" y="858">daily_l / WF4</text>
+<rect class="ohlc" x="353.9" y="836" width="148.1" height="15"/>
+<rect class="real" x="353.9" y="860" width="147.4" height="15"/>
+<rect class="below-target" x="353.9" y="884" width="251.5" height="15"/>
+<path class="axis" fill="none" d="M 602.9,891 H 609.2 M 602.9,886 V 896 M 609.2,886 V 896"/>
+</svg>
