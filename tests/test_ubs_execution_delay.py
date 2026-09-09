@@ -12,6 +12,16 @@ from tests.test_ubs_risk_sensitivity import _report
 
 
 class DelayTests(unittest.TestCase):
+    def test_remaining_strategy_plan(self):
+        plan = delay.case_plan(strategies=delay.REMAINING_STRATEGIES)
+        self.assertEqual(len(plan), 100)
+        self.assertEqual(len({c['case_id'] for c in plan}), 100)
+        self.assertEqual({c['strategy_id'] for c in plan}, set(delay.REMAINING_STRATEGIES))
+        self.assertEqual(sum(c['execution_mode'] == -1 for c in plan), 60)
+        for invalid in ((), ('e', 'e'), ('unknown',)):
+            with self.assertRaises(ValueError):
+                delay.case_plan(strategies=invalid)
+
     def test_plan_and_gate(self):
         plan = delay.case_plan()
         self.assertEqual(len(plan), 40)

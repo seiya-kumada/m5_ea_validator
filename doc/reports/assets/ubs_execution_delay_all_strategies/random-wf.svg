@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="845" viewBox="0 0 1200 845" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">ランダム遅延の四半期別損益差</title>
+  <desc id="chart-desc">7戦略×4WF。平均と実測範囲。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .below-target { fill: #64748b; }
+    .target-band { fill: #d1fae5; opacity: 0.75; }
+    .target-line { stroke: #047857; stroke-width: 3; }
+    .warning-line { stroke: #b91c1c; stroke-width: 3; stroke-dasharray: 10 7; }
+    .warning-cell { fill: #fecaca; }
+    .negative-cell { fill: #fecaca; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .below-target { fill: #94a3b8; }
+      .target-band { fill: #14532d; opacity: 0.7; }
+      .target-line { stroke: #34d399; }
+      .warning-line { stroke: #f87171; }
+      .warning-cell, .negative-cell { fill: #7f1d1d; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="845" />
+<text class="title" x="40" y="42">ランダム遅延の四半期別 Net Profit差</text>
+<text class="subtitle" x="40" y="78">差 = ランダム3回の平均Net Profit − 遅延なしのNet Profit（USD）</text>
+<text class="subtitle" x="40" y="109">各セル：平均差／下段：3回の差の最小～最大　青＝増加、赤＝減少</text>
+<text class="label" x="390" y="150" text-anchor="middle">WF1</text>
+<text class="label" x="600" y="150" text-anchor="middle">WF2</text>
+<text class="label" x="810" y="150" text-anchor="middle">WF3</text>
+<text class="label" x="1020" y="150" text-anchor="middle">WF4</text>
+<text class="label" x="30" y="210">xau_sr_scalp_h1</text>
+<rect class="warning-cell" x="292" y="172" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="201" text-anchor="middle">-1.12</text>
+<text class="axis-label" x="390" y="228" text-anchor="middle">-2.04 ～ +0.00</text>
+<rect class="warning-cell" x="502" y="172" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="201" text-anchor="middle">-0.41</text>
+<text class="axis-label" x="600" y="228" text-anchor="middle">-2.58 ～ +1.98</text>
+<rect class="heat-1" x="712" y="172" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="201" text-anchor="middle">+2.38</text>
+<text class="axis-label" x="810" y="228" text-anchor="middle">-4.59 ～ +15.18</text>
+<rect class="heat-1" x="922" y="172" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="201" text-anchor="middle">+8.46</text>
+<text class="axis-label" x="1020" y="228" text-anchor="middle">+1.77 ～ +15.30</text>
+<text class="label" x="30" y="295">xau_h1_c5</text>
+<rect class="heat-1" x="292" y="257" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="286" text-anchor="middle">+0.04</text>
+<text class="axis-label" x="390" y="313" text-anchor="middle">+0.00 ～ +0.12</text>
+<rect class="heat-1" x="502" y="257" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="286" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="600" y="313" text-anchor="middle">+0.00 ～ +0.00</text>
+<rect class="heat-1" x="712" y="257" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="286" text-anchor="middle">+93.81</text>
+<text class="axis-label" x="810" y="313" text-anchor="middle">+57.81 ～ +111.90</text>
+<rect class="heat-1" x="922" y="257" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="286" text-anchor="middle">+0.26</text>
+<text class="axis-label" x="1020" y="313" text-anchor="middle">+0.00 ～ +0.39</text>
+<text class="label" x="30" y="380">daily_l</text>
+<rect class="warning-cell" x="292" y="342" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="371" text-anchor="middle">-3.91</text>
+<text class="axis-label" x="390" y="398" text-anchor="middle">-4.96 ～ -3.12</text>
+<rect class="warning-cell" x="502" y="342" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="371" text-anchor="middle">-12.99</text>
+<text class="axis-label" x="600" y="398" text-anchor="middle">-14.80 ～ -12.08</text>
+<rect class="heat-1" x="712" y="342" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="371" text-anchor="middle">+3.45</text>
+<text class="axis-label" x="810" y="398" text-anchor="middle">-6.28 ～ +9.00</text>
+<rect class="heat-1" x="922" y="342" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="371" text-anchor="middle">+117.96</text>
+<text class="axis-label" x="1020" y="398" text-anchor="middle">+115.12 ～ +122.28</text>
+<text class="label" x="30" y="465">e</text>
+<rect class="heat-1" x="292" y="427" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="456" text-anchor="middle">+0.93</text>
+<text class="axis-label" x="390" y="483" text-anchor="middle">+0.00 ～ +2.58</text>
+<rect class="heat-1" x="502" y="427" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="456" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="600" y="483" text-anchor="middle">+0.00 ～ +0.00</text>
+<rect class="heat-1" x="712" y="427" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="456" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="810" y="483" text-anchor="middle">+0.00 ～ +0.00</text>
+<rect class="heat-1" x="922" y="427" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="456" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="1020" y="483" text-anchor="middle">+0.00 ～ +0.00</text>
+<text class="label" x="30" y="550">goldtradepro_a</text>
+<rect class="warning-cell" x="292" y="512" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="541" text-anchor="middle">-2.30</text>
+<text class="axis-label" x="390" y="568" text-anchor="middle">-2.81 ～ -1.82</text>
+<rect class="warning-cell" x="502" y="512" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="541" text-anchor="middle">-0.47</text>
+<text class="axis-label" x="600" y="568" text-anchor="middle">-1.93 ～ +0.87</text>
+<rect class="warning-cell" x="712" y="512" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="541" text-anchor="middle">-7.55</text>
+<text class="axis-label" x="810" y="568" text-anchor="middle">-17.60 ～ +3.82</text>
+<rect class="heat-1" x="922" y="512" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="541" text-anchor="middle">+44.86</text>
+<text class="axis-label" x="1020" y="568" text-anchor="middle">-8.60 ～ +72.12</text>
+<text class="label" x="30" y="635">mt5_longterm_e</text>
+<rect class="heat-1" x="292" y="597" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="626" text-anchor="middle">+2.30</text>
+<text class="axis-label" x="390" y="653" text-anchor="middle">-0.11 ～ +6.92</text>
+<rect class="heat-1" x="502" y="597" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="626" text-anchor="middle">+4.16</text>
+<text class="axis-label" x="600" y="653" text-anchor="middle">+3.68 ～ +4.51</text>
+<rect class="warning-cell" x="712" y="597" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="626" text-anchor="middle">-23.60</text>
+<text class="axis-label" x="810" y="653" text-anchor="middle">-28.47 ～ -14.68</text>
+<rect class="warning-cell" x="922" y="597" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="626" text-anchor="middle">-10.40</text>
+<text class="axis-label" x="1020" y="653" text-anchor="middle">-20.09 ～ +1.78</text>
+<text class="label" x="30" y="720">mt5_longterm_j</text>
+<rect class="heat-1" x="292" y="682" width="196" height="73" rx="4"/>
+<text class="value" x="390" y="711" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="390" y="738" text-anchor="middle">+0.00 ～ +0.00</text>
+<rect class="heat-1" x="502" y="682" width="196" height="73" rx="4"/>
+<text class="value" x="600" y="711" text-anchor="middle">+15.68</text>
+<text class="axis-label" x="600" y="738" text-anchor="middle">+15.68 ～ +15.68</text>
+<rect class="heat-1" x="712" y="682" width="196" height="73" rx="4"/>
+<text class="value" x="810" y="711" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="810" y="738" text-anchor="middle">+0.00 ～ +0.00</text>
+<rect class="heat-1" x="922" y="682" width="196" height="73" rx="4"/>
+<text class="value" x="1020" y="711" text-anchor="middle">+0.00</text>
+<text class="axis-label" x="1020" y="738" text-anchor="middle">+0.00 ～ +0.00</text>
+<text class="subtitle" x="40" y="817">線や範囲は信頼区間ではなく、測定した3回だけの範囲です。</text>
+</svg>

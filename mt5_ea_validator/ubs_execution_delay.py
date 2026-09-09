@@ -19,14 +19,20 @@ from mt5_ea_validator.ubs_smoke import (
 )
 
 STRATEGIES = ('xau_h1_c5', 'daily_l')
+REMAINING_STRATEGIES = ('xau_sr_scalp_h1', 'e', 'goldtradepro_a',
+                        'mt5_longterm_e', 'mt5_longterm_j')
 
 
-def case_plan(repeats=3):
+def case_plan(repeats=3, strategies=STRATEGIES):
+    strategies = tuple(strategies)
+    if (not strategies or len(set(strategies)) != len(strategies)
+            or not set(strategies) <= set(STRATEGIES + REMAINING_STRATEGIES)):
+        raise ValueError('Strategies must be known, nonempty and unique')
     if repeats < 2:
         raise ValueError('Random delay requires at least two repetitions')
     return [dict(case_id=f'{wf}_{sid}_{label}', wf=wf, strategy_id=sid,
                  execution_mode=mode, repetition=rep)
-            for wf in WF_PERIODS for sid in STRATEGIES
+            for wf in WF_PERIODS for sid in strategies
             for label, mode, rep in [('no_delay', 0, 1), ('fixed_188', 188, 1)]
             + [(f'random_{i}', -1, i) for i in range(1, repeats + 1)]]
 
@@ -46,6 +52,7 @@ def comparison(result, baseline):
 
 
 def run(settings, baseline_run, *, resume=None, max_cases=None, repeats=3,
+        strategies=STRATEGIES,
         case_runner=execute_ubs_case, volume_parser=parse_entry_volume_audit):
     source = baseline_run.resolve() / 'run_manifest.json'
     old = _load_json(source, label='quarterly baseline')
@@ -64,7 +71,7 @@ def run(settings, baseline_run, *, resume=None, max_cases=None, repeats=3,
         Path(old['faithful_validation_run']))
     selected = {s['strategy_id']: s for s in selected}
     baselines = {(r['wf'], r['strategy_id']): r for r in old['results']}
-    plan = case_plan(repeats)
+    plan = case_plan(repeats, strategies)
     for case in plan:
         base = baselines[(case['wf'], case['strategy_id'])]
         if (base['status'] != 'success'
@@ -121,6 +128,8 @@ def run(settings, baseline_run, *, resume=None, max_cases=None, repeats=3,
                                staged_set_name=f'UBS_DELAY_{sid}_{chosen["selected_set_sha256"][:8]}.set')
             output = directory / cid
             _archive_case(output, datetime.now(JST))
+            manifest.update(active_case=cid, updated_at=datetime.now(JST).isoformat())
+            _write_manifest(manifest_path, manifest)
             print(f'START [{len(completed)+1}/{len(plan)}] {cid}', flush=True)
             result = case_runner(current, strategy, scenario, output,
                                  executor_factory=_limited_annual_executor_factory,
@@ -147,6 +156,7 @@ def run(settings, baseline_run, *, resume=None, max_cases=None, repeats=3,
             manifest['results'].append(dict(case_id=cid, result_sha256=sha256_file(output / 'result.json')))
             completed[cid] = result
             count += 1
+            manifest.update(active_case=None, updated_at=datetime.now(JST).isoformat())
             _write_manifest(manifest_path, manifest)
             rows = [dict(case_id=r['case_id'], wf=r['wf'], strategy_id=r['strategy_id'],
                          execution_mode=r['execution_mode'], repetition=r['repetition'],
@@ -172,9 +182,12 @@ def main():
     parser.add_argument('--resume-run', type=Path)
     parser.add_argument('--max-cases', type=int)
     parser.add_argument('--random-repeats', type=int, default=3)
+    parser.add_argument('--strategies', nargs='+', default=STRATEGIES,
+                        choices=STRATEGIES + REMAINING_STRATEGIES)
     args = parser.parse_args()
     run(load_ubs_smoke_settings(args.config), args.baseline_run,
-        resume=args.resume_run, max_cases=args.max_cases, repeats=args.random_repeats)
+        resume=args.resume_run, max_cases=args.max_cases, repeats=args.random_repeats,
+        strategies=args.strategies)
 
 
 if __name__ == '__main__':

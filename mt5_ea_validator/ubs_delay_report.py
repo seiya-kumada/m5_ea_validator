@@ -9,10 +9,11 @@ from mt5_ea_validator.ubs_execution_delay import STRATEGIES, case_plan, comparis
 from mt5_ea_validator.ubs_report import _svg_document, WF_PERIODS
 
 
-def load_results(run):
+def load_results(run, strategies=STRATEGIES):
+    expected_plan = case_plan(strategies=strategies)
     manifest = json.loads((run / 'run_manifest.json').read_text(encoding='utf-8'))
-    if manifest['status'] != 'success' or manifest['plan'] != case_plan():
-        raise ValueError('Expected successful 40-case campaign')
+    if manifest['status'] != 'success' or manifest['plan'] != expected_plan:
+        raise ValueError('Expected successful campaign with the requested cases')
     rows = []
     for record in manifest['results']:
         path = run / record['case_id'] / 'result.json'
@@ -23,9 +24,9 @@ def load_results(run):
                 or not row['tick_data_quality']['passed']):
             raise ValueError('Case audit failed')
         rows.append(row)
-    if [r['case_id'] for r in rows] != [c['case_id'] for c in case_plan()]:
+    if [r['case_id'] for r in rows] != [c['case_id'] for c in expected_plan]:
         raise ValueError('Missing, duplicate or reordered cases')
-    for row, case in zip(rows, case_plan(), strict=True):
+    for row, case in zip(rows, expected_plan, strict=True):
         if any(row[k] != v for k, v in case.items()):
             raise ValueError('Case identity mismatch')
     return manifest, rows
