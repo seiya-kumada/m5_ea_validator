@@ -89,3 +89,27 @@ uv run python -m mt5_ea_validator run-slippage-suite `
 ```
 
 `--execution-mode`は、`0`がNo Delay、`188`が固定188ms、`-1`がランダム延滞です。中断時は`--resume-run <result-directory>`で未完了ケースだけ再開できます。生の成果物は`data/slippage_tolerance`配下へ保存され、Git管理されません。利用者が明示した最終報告書と関連画像だけは例外として追跡します。
+
+## UBS取引コスト耐性
+
+7戦略・従来の4 WF・選定済み固定ロット・3000 USD・実ティック・No Delayを維持し、S=0,2,5,10 pointsで比較します。価格加工・銘柄生成・MT5実行・UBS入力監査は既存処理を共有します。計画・変更理由は `doc/plans/20260910_ubs_transaction_cost.md` に記録します。
+
+通常XAUUSDのSwapが過去結果から変わっていたため、2026-09-10の利用者承認に基づき、通常銘柄28件を新規取得して今回専用の基準にしました。基準の更新は自動的な許容幅緩和ではありません。旧結果を残し、旧基準との差も保存します。
+
+次の山括弧部分は実際の保存先に置き換えます。MT5を終了してから実行してください。
+
+```powershell
+# S=0データ生成
+uv run python -m mt5_ea_validator.ubs_transaction_cost build-zero --baseline-run <旧通常銘柄基準run>
+# 承認済みの基準更新（通常銘柄28件）
+uv run python -m mt5_ea_validator.ubs_transaction_cost source-refresh --baseline-run <旧通常銘柄基準run> --build-index <S0-build_index.json>
+# 新基準runは source_refresh_<run_id>/refreshed_baseline
+uv run python -m mt5_ea_validator.ubs_transaction_cost zero-suite --baseline-run <新基準run> --build-index <S0-build_index.json>
+# S=0の全28件PASS後だけ実行可能
+uv run python -m mt5_ea_validator.ubs_transaction_cost build-positive --baseline-run <新基準run> --zero-run <zero_suite-run> --build-index <S0-build_index.json>
+uv run python -m mt5_ea_validator.ubs_transaction_cost positive-suite --baseline-run <新基準run> --zero-run <zero_suite-run> --build-index <S0-build_index.json> --positive-index <正ストレス-build_index.json>
+```
+
+テストスイートは `--max-cases`、`--resume-run` と実行フォルダ直下の `STOP_AFTER_CASE` に対応します。停止マーカーはケース間で確認します（銘柄生成には適用されません）。MT5はBelowNormal・最大4論理CPU・直列実行です。
+
+結果は `data/ubs_strategy_comparison/transaction_cost/`、生成記録は `data/transaction_cost_stress/symbol_builds/` に保存します。スイートのmanifestが、各ケースの独立runのresult.jsonとハッシュを参照します。`source_refresh_` は通常銘柄の新基準取得、`zero_suite_` はS=0再現確認、`positive_suite_` はS>0の84件を表し、日付だけのrunは各単件の実行証拠です。いずれもGit管理外です。

@@ -9,6 +9,8 @@ input string InpFromDate = "2024.01.01";
 input string InpToDateExclusive = "2026.07.01";
 input int InpStressPoints = 0;
 input string InpOutputFile = "mt5_ea_validator\\transaction_cost\\manifest.txt";
+input double InpReferenceTickSize = 0.0;
+input long InpReferenceFirstM1Time = 0;
 
 #define DAY_MILLISECONDS 86400000
 #define SPREAD_HISTOGRAM_MAX 100000
@@ -42,6 +44,7 @@ ulong g_spread_histogram[];
 int g_digits = 0;
 double g_point = 0.0;
 double g_tick_size = 0.0;
+double g_reported_tick_size = 0.0;
 
 ulong MixUlong(ulong hash_value, ulong value)
   {
@@ -113,6 +116,9 @@ bool WriteManifest(const string status,const string error_message,
    FileWrite(handle,"digits="+IntegerToString(g_digits));
    FileWrite(handle,"point="+DoubleToString(g_point,g_digits+2));
    FileWrite(handle,"tick_size="+DoubleToString(g_tick_size,g_digits+2));
+   FileWrite(handle,"reported_source_tick_size="+DoubleToString(g_reported_tick_size,g_digits+2));
+   FileWrite(handle,"reference_tick_size="+DoubleToString(InpReferenceTickSize,g_digits+2));
+   FileWrite(handle,"reference_first_m1_time="+IntegerToString(InpReferenceFirstM1Time));
    FileWrite(handle,"stress_points="+IntegerToString(InpStressPoints));
    FileWrite(handle,"stress_price="+DoubleToString(InpStressPoints*g_point,g_digits));
    FileWrite(handle,"source_tick_count="+StringFormat("%I64u",g_source_ticks));
@@ -313,7 +319,10 @@ bool CopyDayRates(const string symbol,const datetime from_time,const datetime to
       ResetLastError();
       int copied=CopyRates(symbol,PERIOD_M1,from_time,to_time,rates);
       int error_code=GetLastError();
-      if(copied>=0 && error_code==0)
+      bool first_bar_required=(symbol==InpSourceSymbol && InpReferenceFirstM1Time>0
+                               && from_time<=InpReferenceFirstM1Time && to_time>=InpReferenceFirstM1Time);
+      bool first_bar_present=(!first_bar_required || (copied>0 && rates[0].time==InpReferenceFirstM1Time));
+      if(copied>=0 && error_code==0 && first_bar_present)
          return(true);
       PrintFormat("CopyRates attempt=%d symbol=%s from=%I64d to=%I64d copied=%d error=%d",
                   attempt,symbol,from_time,to_time,copied,error_code);
@@ -334,6 +343,10 @@ bool ProcessM1Rates(const ulong from_msc,const ulong to_msc_exclusive,string &er
       datetime from_time=(datetime)(day_from/1000);
       datetime to_time=(datetime)(day_to/1000);
       MqlRates source_rates[];
+      // Only skip whole days proved empty by the frozen source's audited boundary.
+      if(InpReferenceFirstM1Time>0 && SymbolInfoInteger(InpSourceSymbol,SYMBOL_CUSTOM)
+         && (long)to_time<InpReferenceFirstM1Time)
+         continue;
       if(!CopyDayRates(InpSourceSymbol,from_time,to_time,source_rates,error_message))
          return(false);
       int source_count=ArraySize(source_rates);
@@ -469,6 +482,11 @@ void OnStart()
       g_digits=(int)SymbolInfoInteger(InpSourceSymbol,SYMBOL_DIGITS);
       g_point=SymbolInfoDouble(InpSourceSymbol,SYMBOL_POINT);
       g_tick_size=SymbolInfoDouble(InpSourceSymbol,SYMBOL_TRADE_TICK_SIZE);
+      g_reported_tick_size=g_tick_size;
+      // Metadata reference only: never modify source/destination symbol properties.
+      if(g_tick_size==0.0 && SymbolInfoInteger(InpSourceSymbol,SYMBOL_CUSTOM)
+         && MathIsValidNumber(InpReferenceTickSize) && InpReferenceTickSize>0.0)
+         g_tick_size=InpReferenceTickSize;
       if(g_digits<0 || g_point<=0.0 || g_tick_size<=0.0)
          error_message="Invalid source symbol specification";
      }

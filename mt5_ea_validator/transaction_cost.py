@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 import shutil
 import subprocess
@@ -180,7 +181,13 @@ def render_symbol_builder_set(
     to_date_exclusive: str,
     stress_points: int,
     output_file: Path,
+    reference_tick_size: float | None = None,
+    reference_first_m1_time: int | None = None,
 ) -> str:
+    if reference_first_m1_time is not None and (type(reference_first_m1_time) is not int or reference_first_m1_time <= 0):
+        raise TransactionCostError('Reference first M1 time must be a positive integer')
+    if reference_tick_size is not None and (not math.isfinite(reference_tick_size) or reference_tick_size <= 0):
+        raise TransactionCostError('Reference tick size must be finite and positive')
     if stress_points < 0:
         raise TransactionCostError("stress pointsは0以上でなければなりません")
     if not re.fullmatch(r"[A-Za-z0-9._&#]+", custom_symbol):
@@ -195,6 +202,8 @@ def render_symbol_builder_set(
             f"InpToDateExclusive={to_date_exclusive}",
             f"InpStressPoints={stress_points}",
             f"InpOutputFile={output_value}",
+            *((f"InpReferenceTickSize={reference_tick_size}",) if reference_tick_size is not None else ()),
+            *((f"InpReferenceFirstM1Time={reference_first_m1_time}",) if reference_first_m1_time is not None else ()),
             "",
         )
     )
@@ -450,9 +459,13 @@ class CustomSymbolBuilder:
         scenario: Scenario,
         *,
         process_runner: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+        reference_tick_size: float | None = None,
+        reference_first_m1_time: int | None = None,
     ) -> None:
         self.scenario = scenario
         self._process_runner = process_runner
+        self.reference_tick_size = reference_tick_size
+        self.reference_first_m1_time = reference_first_m1_time
 
     @property
     def metaeditor_path(self) -> Path:
@@ -577,6 +590,8 @@ class CustomSymbolBuilder:
                         to_date_exclusive=to_date_exclusive,
                         stress_points=stress,
                         output_file=staging_relative,
+                        reference_tick_size=self.reference_tick_size,
+                        reference_first_m1_time=self.reference_first_m1_time,
                     ),
                 )
                 ini_path = level_directory / "builder.ini"
