@@ -92,6 +92,8 @@ uv run python -m mt5_ea_validator run-slippage-suite `
 
 ## UBS取引コスト耐性
 
+総合報告書：[UBS Gold 7戦略の取引コスト耐性（第1層）](doc/reports/ubs_transaction_cost_comparison.md)。7戦略×4WF×4水準の全112件を掲載しています。報告書の再生成は `uv run python -m mt5_ea_validator.ubs_cost_report --output doc/reports/ubs_transaction_cost_comparison_new.md`（原データ必須、既存出力の上書き不可）。
+
 7戦略・従来の4 WF・選定済み固定ロット・3000 USD・実ティック・No Delayを維持し、S=0,2,5,10 pointsで比較します。価格加工・銘柄生成・MT5実行・UBS入力監査は既存処理を共有します。計画・変更理由は `doc/plans/20260910_ubs_transaction_cost.md` に記録します。
 
 通常XAUUSDのSwapが過去結果から変わっていたため、2026-09-10の利用者承認に基づき、通常銘柄28件を新規取得して今回専用の基準にしました。基準の更新は自動的な許容幅緩和ではありません。旧結果を残し、旧基準との差も保存します。

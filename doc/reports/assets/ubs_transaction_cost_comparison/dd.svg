@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1175" viewBox="0 0 1200 1175" role="img" aria-labelledby="chart-title chart-desc">
+  <title id="chart-title">各水準の四半期Equity DD最大値</title>
+  <desc id="chart-desc">4WFのDDの最大値。DDの合計・年間連続DDではありません。</desc>
+<style>
+    .bg { fill: #ffffff; }
+    text { font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif; fill: #111827; font-weight: 400; }
+    .title { font-size: 28px; font-weight: 500; }
+    .subtitle { font-size: 18px; fill: #374151; }
+    .label { font-size: 18px; }
+    .axis-label { font-size: 16px; fill: #374151; }
+    .value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    .grid { stroke: #d1d5db; stroke-width: 1; }
+    .axis { stroke: #4b5563; stroke-width: 1.5; }
+    .ohlc { fill: #2563eb; }
+    .real { fill: #0f766e; }
+    .negative { fill: #b91c1c; }
+    .positive { fill: #047857; }
+    .below-target { fill: #64748b; }
+    .target-band { fill: #d1fae5; opacity: 0.75; }
+    .target-line { stroke: #047857; stroke-width: 3; }
+    .warning-line { stroke: #b91c1c; stroke-width: 3; stroke-dasharray: 10 7; }
+    .warning-cell { fill: #fecaca; }
+    .negative-cell { fill: #fecaca; }
+    .point { fill: #0f766e; stroke: #ffffff; stroke-width: 2; }
+    .heat-1 { fill: #dbeafe; } .heat-2 { fill: #93c5fd; }
+    .heat-3 { fill: #60a5fa; } .heat-4 { fill: #2563eb; }
+    .heat-value { font-size: 17px; font-weight: 500; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #17191d; }
+      text { fill: #f3f4f6; }
+      .subtitle, .axis-label { fill: #d1d5db; }
+      .value, .heat-value { stroke: #17191d; }
+      .grid { stroke: #4b5563; } .axis { stroke: #d1d5db; }
+      .ohlc { fill: #60a5fa; } .real { fill: #34d399; }
+      .negative { fill: #f87171; } .positive { fill: #34d399; }
+      .below-target { fill: #94a3b8; }
+      .target-band { fill: #14532d; opacity: 0.7; }
+      .target-line { stroke: #34d399; }
+      .warning-line { stroke: #f87171; }
+      .warning-cell, .negative-cell { fill: #7f1d1d; }
+      .point { fill: #34d399; stroke: #17191d; }
+      .heat-1 { fill: #1e3a5f; } .heat-2 { fill: #1d4f7a; }
+      .heat-3 { fill: #246b9e; } .heat-4 { fill: #3182bd; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="1175" />
+<text class="title" x="30" y="42">各水準の四半期Equity DD最大値</text>
+<text class="subtitle" x="30" y="78">4WFのDDの最大値。DDの合計・年間連続DDではありません。</text>
+<text class="subtitle" x="30" y="112">青:S=0　緑:S=2　灰:S=5　紫:S=10</text>
+<style>.stress10{fill:#7c3aed}@media(prefers-color-scheme:dark){.stress10{fill:#c4b5fd}}</style>
+<line class="grid" x1="290.0" y1="140" x2="290.0" y2="1070"/>
+<text class="axis-label" x="290.0" y="1100" text-anchor="middle">-0.7</text>
+<line class="grid" x1="446.0" y1="140" x2="446.0" y2="1070"/>
+<text class="axis-label" x="446.0" y="1100" text-anchor="middle">2.7</text>
+<line class="grid" x1="602.0" y1="140" x2="602.0" y2="1070"/>
+<text class="axis-label" x="602.0" y="1100" text-anchor="middle">6.0</text>
+<line class="grid" x1="758.0" y1="140" x2="758.0" y2="1070"/>
+<text class="axis-label" x="758.0" y="1100" text-anchor="middle">9.3</text>
+<line class="grid" x1="914.0" y1="140" x2="914.0" y2="1070"/>
+<text class="axis-label" x="914.0" y="1100" text-anchor="middle">12.6</text>
+<line class="grid" x1="1070.0" y1="140" x2="1070.0" y2="1070"/>
+<text class="axis-label" x="1070.0" y="1100" text-anchor="middle">15.9</text>
+<line class="axis" x1="321.2" y1="140" x2="321.2" y2="1070"/>
+<text class="label" x="25" y="204">xau_sr_scalp_h1</text>
+<rect class="ohlc" x="321.2" y="158" width="248.1" height="19"/>
+<text class="value" x="577.3" y="174">5.28</text>
+<rect class="real" x="321.2" y="186" width="249.0" height="19"/>
+<text class="value" x="578.2" y="202">5.30</text>
+<rect class="below-target" x="321.2" y="214" width="249.0" height="19"/>
+<text class="value" x="578.2" y="230">5.30</text>
+<rect class="stress10" x="321.2" y="242" width="242.0" height="19"/>
+<text class="value" x="571.2" y="258">5.15</text>
+<text class="label" x="25" y="334">xau_h1_c5</text>
+<rect class="ohlc" x="321.2" y="288" width="249.0" height="19"/>
+<text class="value" x="578.2" y="304">5.30</text>
+<rect class="real" x="321.2" y="316" width="248.1" height="19"/>
+<text class="value" x="577.3" y="332">5.28</text>
+<rect class="below-target" x="321.2" y="344" width="249.5" height="19"/>
+<text class="value" x="578.7" y="360">5.31</text>
+<rect class="stress10" x="321.2" y="372" width="395.6" height="19"/>
+<text class="value" x="724.8" y="388">8.42</text>
+<text class="label" x="25" y="464">daily_l</text>
+<rect class="ohlc" x="321.2" y="418" width="234.0" height="19"/>
+<text class="value" x="563.2" y="434">4.98</text>
+<rect class="real" x="321.2" y="446" width="264.1" height="19"/>
+<text class="value" x="593.3" y="462">5.62</text>
+<rect class="below-target" x="321.2" y="474" width="265.5" height="19"/>
+<text class="value" x="594.7" y="490">5.65</text>
+<rect class="stress10" x="321.2" y="502" width="264.5" height="19"/>
+<text class="value" x="593.7" y="518">5.63</text>
+<text class="label" x="25" y="594">e</text>
+<rect class="ohlc" x="321.2" y="548" width="175.3" height="19"/>
+<text class="value" x="504.5" y="564">3.73</text>
+<rect class="real" x="321.2" y="576" width="175.3" height="19"/>
+<text class="value" x="504.5" y="592">3.73</text>
+<rect class="below-target" x="321.2" y="604" width="175.7" height="19"/>
+<text class="value" x="504.9" y="620">3.74</text>
+<rect class="stress10" x="321.2" y="632" width="176.7" height="19"/>
+<text class="value" x="505.9" y="648">3.76</text>
+<text class="label" x="25" y="724">goldtradepro_a</text>
+<rect class="ohlc" x="321.2" y="678" width="624.0" height="19"/>
+<text class="value" x="953.2" y="694">13.28</text>
+<rect class="real" x="321.2" y="706" width="623.5" height="19"/>
+<text class="value" x="952.7" y="722">13.27</text>
+<rect class="below-target" x="321.2" y="734" width="624.0" height="19"/>
+<text class="value" x="953.2" y="750">13.28</text>
+<rect class="stress10" x="321.2" y="762" width="623.1" height="19"/>
+<text class="value" x="952.3" y="778">13.26</text>
+<text class="label" x="25" y="854">mt5_longterm_e</text>
+<rect class="ohlc" x="321.2" y="808" width="185.1" height="19"/>
+<text class="value" x="514.3" y="824">3.94</text>
+<rect class="real" x="321.2" y="836" width="185.1" height="19"/>
+<text class="value" x="514.3" y="852">3.94</text>
+<rect class="below-target" x="321.2" y="864" width="230.7" height="19"/>
+<text class="value" x="559.9" y="880">4.91</text>
+<rect class="stress10" x="321.2" y="892" width="155.5" height="19"/>
+<text class="value" x="484.7" y="908">3.31</text>
+<text class="label" x="25" y="984">mt5_longterm_j</text>
+<rect class="ohlc" x="321.2" y="938" width="149.4" height="19"/>
+<text class="value" x="478.6" y="954">3.18</text>
+<rect class="real" x="321.2" y="966" width="149.9" height="19"/>
+<text class="value" x="479.1" y="982">3.19</text>
+<rect class="below-target" x="321.2" y="994" width="150.4" height="19"/>
+<text class="value" x="479.6" y="1010">3.20</text>
+<rect class="stress10" x="321.2" y="1022" width="175.3" height="19"/>
+<text class="value" x="504.5" y="1038">3.73</text>
+<text class="subtitle" x="30" y="1144">単位：%　各戦略の採用固定ロットを維持。全戦略が同一リスクではありません。</text>
+</svg>
